@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(Router.self) private var router
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        @Bindable var router = router
+        
+        NavigationStack(path: $router.path) {
+            VStack {
+                NavigationLink("Detail") {
+                    DetailView()
+                }
+                NavigationLink("Setting") {
+                    SettingView()
+                }
+            }
+            .navigationTitle("Home")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
 
