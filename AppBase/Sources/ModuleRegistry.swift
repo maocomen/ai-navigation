@@ -15,6 +15,7 @@ public final class ModuleRegistry: @unchecked Sendable {
     public func registerModule(_ module: any ModuleProtocol) {
         modules[module.moduleID] = module
         module.registerRoutes(in: self)
+        module.initializeResources()
     }
 
     /// 注销模块

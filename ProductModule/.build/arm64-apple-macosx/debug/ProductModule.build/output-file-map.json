@@ -2,11 +2,46 @@
   "": {
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/primary.swiftdeps"
   },
-  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift": {
-    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.d",
-    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swift.o",
-    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes~partial.swiftmodule",
-    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swiftdeps",
-    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.dia"
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.dia"
   }
 }

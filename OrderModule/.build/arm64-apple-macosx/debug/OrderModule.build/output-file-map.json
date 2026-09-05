@@ -2,11 +2,60 @@
   "": {
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/primary.swiftdeps"
   },
-  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderRoutes.swift": {
-    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.d",
-    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.swift.o",
-    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes~partial.swiftmodule",
-    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.swiftdeps",
-    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.dia"
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Models/Order.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderModule.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/ViewModels/OrderViewModels.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CartView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CheckoutView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderDetailView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderListView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.dia"
   }
 }

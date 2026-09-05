@@ -2,11 +2,60 @@
   "": {
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/primary.swiftdeps"
   },
-  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift": {
-    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.d",
-    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swift.o",
-    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes~partial.swiftmodule",
-    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swiftdeps",
-    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.dia"
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.dia"
   }
 }

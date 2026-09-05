@@ -23,3 +23,29 @@ extension RouteType {
         return Self.path
     }
 }
+
+/// 路由栈元素包装 - 作为 `NavigationPath` 的统一元素类型
+///
+/// 说明：`NavigationPath` 会在栈中还原元素的**具体类型**，
+/// 而 `navigationDestination(for:)` 也按**具体类型**匹配。
+/// 若直接 `append(any RouteType)`，元素类型是各自的 `UserRoutes.Login` 等，
+/// 与主应用注册的 `navigationDestination(for: RouteBox.self)` 无法匹配，
+/// 导致二级页面无法展示。
+/// 统一包装为 `RouteBox` 后，元素类型恒为 `RouteBox`，即可稳定匹配并动态解包到具体视图。
+public struct RouteBox: Hashable, @unchecked Sendable {
+    public typealias RouteViewBuilder = @MainActor (any RouteType) -> AnyView
+
+    public let route: any RouteType
+
+    public init(_ route: any RouteType) {
+        self.route = route
+    }
+
+    public static func == (lhs: RouteBox, rhs: RouteBox) -> Bool {
+        return AnyHashable(lhs.route) == AnyHashable(rhs.route)
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(AnyHashable(route))
+    }
+}

@@ -185,7 +185,27 @@
       "inputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift"
         },
         {
           "kind" : "file",
@@ -204,7 +224,12 @@
       "moduleName" : "ProductModule",
       "moduleOutputPath" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/ProductModule.swiftmodule",
       "objects" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swift.o"
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -259,7 +284,27 @@
       "outputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swift.o"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/Product.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductModule.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductViewModels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductDetailView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductListView.swift.o"
         },
         {
           "kind" : "file",
@@ -268,7 +313,12 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift"
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift"
       ],
       "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build",
       "wholeModuleOptimization" : false
@@ -352,7 +402,12 @@
       "-package-name",
       "productmodule",
       "-c",
-      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift",
       "-I",
       "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -477,7 +532,27 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift"
         }
       ],
       "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources"

@@ -56,19 +56,16 @@ struct ContentView: View {
     private func tabStack(for tab: Router.Tab, @ViewBuilder root: () -> some View) -> some View {
         NavigationStack(path: router.binding(for: tab)) {
             root()
-                .navigationDestination(for: AnyHashable.self) { value in
-                    routeDestination(for: value)
+                .navigationDestination(for: RouteBox.self) { box in
+                    routeDestination(for: box)
                 }
         }
+        .toolbar(router.isDetail(tab) ? .hidden : .visible, for: .tabBar)
     }
 
     @ViewBuilder
-    private func routeDestination(for value: AnyHashable) -> some View {
-        if let route = value.base as? any RouteType {
-            AnyView(route.makeView())
-        } else {
-            Text("Unknown route")
-        }
+    private func routeDestination(for box: RouteBox) -> some View {
+        box.route.makeView()
     }
 }
 

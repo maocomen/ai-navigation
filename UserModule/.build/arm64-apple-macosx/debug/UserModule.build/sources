@@ -1,1 +1,8 @@
-/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift
+/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift

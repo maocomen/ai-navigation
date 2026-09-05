@@ -185,7 +185,35 @@
       "inputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Models/Order.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/ViewModels/OrderViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CartView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CheckoutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderListView.swift"
         },
         {
           "kind" : "file",
@@ -204,7 +232,14 @@
       "moduleName" : "OrderModule",
       "moduleOutputPath" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/Modules/OrderModule.swiftmodule",
       "objects" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.swift.o"
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -259,7 +294,35 @@
       "outputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRoutes.swift.o"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/Order.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderViewModels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CheckoutView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderDetailView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderListView.swift.o"
         },
         {
           "kind" : "file",
@@ -268,7 +331,14 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderRoutes.swift"
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Models/Order.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderModule.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/ViewModels/OrderViewModels.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CartView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CheckoutView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderDetailView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderListView.swift"
       ],
       "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build",
       "wholeModuleOptimization" : false
@@ -352,7 +422,14 @@
       "-package-name",
       "ordermodule",
       "-c",
-      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderRoutes.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Models/Order.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderModule.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/ViewModels/OrderViewModels.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CartView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CheckoutView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderDetailView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderListView.swift",
       "-I",
       "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -477,7 +554,35 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Models/Order.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/OrderModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/ViewModels/OrderViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CartView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/CheckoutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Views/OrderListView.swift"
         }
       ],
       "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/sources"

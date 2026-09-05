@@ -33,6 +33,11 @@ final class Router: Navigator {
         )
     }
 
+    /// 指定 Tab 是否处于二级页（栈非空），用于驱动 TabBar 显隐
+    func isDetail(_ tab: Tab) -> Bool {
+        !path(for: tab).isEmpty
+    }
+
     private func path(for tab: Tab) -> NavigationPath {
         switch tab {
         case .home: return homePath
@@ -66,7 +71,7 @@ final class Router: Navigator {
 
     func push(_ route: any RouteType) {
         var p = path(for: activeTab)
-        p.append(route)
+        p.append(RouteBox(route))
         setPath(p, for: activeTab)
         recordHistory(route._path, action: .push)
     }
@@ -98,7 +103,7 @@ final class Router: Navigator {
             return
         }
         p.removeLast()
-        p.append(route)
+        p.append(RouteBox(route))
         setPath(p, for: activeTab)
         recordHistory(route._path, action: .replace)
     }
@@ -117,7 +122,7 @@ final class Router: Navigator {
 
     func replaceRoot(_ route: any RouteType) {
         var p = NavigationPath()
-        p.append(route)
+        p.append(RouteBox(route))
         setPath(p, for: activeTab)
         recordHistory(route._path, action: .reset)
     }

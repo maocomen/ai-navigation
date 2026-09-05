@@ -1,1 +1,6 @@
-/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Models/Product.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductModule.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Repositories/ProductRepository.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ViewModels/ProductViewModels.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductDetailView.swift
+/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/Views/ProductListView.swift

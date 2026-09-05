@@ -185,7 +185,35 @@
       "inputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift"
         },
         {
           "kind" : "file",
@@ -204,7 +232,14 @@
       "moduleName" : "UserModule",
       "moduleOutputPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/UserModule.swiftmodule",
       "objects" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swift.o"
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -259,7 +294,35 @@
       "outputs" : [
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swift.o"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/User.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserModule.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserViewModels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/LoginView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/RegisterView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/SettingsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserProfileView.swift.o"
         },
         {
           "kind" : "file",
@@ -268,7 +331,14 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
-        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift"
       ],
       "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build",
       "wholeModuleOptimization" : false
@@ -352,7 +422,14 @@
       "-package-name",
       "usermodule",
       "-c",
-      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift",
       "-I",
       "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -477,7 +554,35 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Models/User.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Repositories/UserRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserModule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/ViewModels/UserViewModels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/LoginView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/RegisterView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/SettingsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/Views/UserProfileView.swift"
         }
       ],
       "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/sources"
