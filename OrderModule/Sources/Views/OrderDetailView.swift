@@ -4,7 +4,7 @@ import ProductContracts
 
 /// 订单详情视图（支付/取消/状态推进）
 public struct OrderDetailView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel: OrderDetailViewModel
     @State private var showMessage = false
 
@@ -89,7 +89,7 @@ public struct OrderDetailView: View {
         case .delivered:
             Section("操作") {
                 Button("再次购买") {
-                    navigator.navigate(to: ProductLinks.list)
+                    router.navigate(to: ProductLinks.list)
                 }
             }
         case .cancelled:

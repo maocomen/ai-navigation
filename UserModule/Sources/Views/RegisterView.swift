@@ -3,7 +3,7 @@ import AppBase
 
 /// 注册视图
 public struct RegisterView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel = RegisterViewModel()
     @State private var showSuccess = false
 
@@ -24,7 +24,7 @@ public struct RegisterView: View {
         }
         .navigationTitle("注册")
         .alert("注册成功", isPresented: $showSuccess) {
-            Button("开始使用") { navigator.pop() }
+            Button("开始使用") { router.pop() }
         } message: {
             Text("账号 \(viewModel.username) 已创建")
         }

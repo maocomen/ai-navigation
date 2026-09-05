@@ -5,7 +5,7 @@ import ProductContracts
 
 /// 用户主页视图
 public struct UserProfileView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel: ProfileViewModel
     @State private var showSaved = false
 
@@ -73,15 +73,15 @@ public struct UserProfileView: View {
             } else {
                 Button("编辑资料") { viewModel.beginEditing() }
             }
-            Button("查看订单") { navigator.navigate(to: OrderLinks.list) }
-            Button("浏览商品") { navigator.navigate(to: ProductLinks.list) }
-            Button("账号设置") { navigator.push(UserRoutes.Settings()) }
+            Button("查看订单") { router.navigate(to: OrderLinks.list) }
+            Button("浏览商品") { router.navigate(to: ProductLinks.list) }
+            Button("账号设置") { router.push(UserRoutes.Settings()) }
         }
 
         Section {
             Button("退出登录", role: .destructive) {
                 viewModel.logout()
-                navigator.popToRoot()
+                router.popToRoot()
             }
         }
     }

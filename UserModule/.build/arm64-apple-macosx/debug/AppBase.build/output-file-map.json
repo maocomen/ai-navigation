@@ -30,13 +30,6 @@
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swiftdeps",
     "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.dia"
   },
-  "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift": {
-    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.d",
-    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o",
-    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator~partial.swiftmodule",
-    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swiftdeps",
-    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.dia"
-  },
   "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift": {
     "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.d",
     "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o",
@@ -57,6 +50,13 @@
     "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteURL~partial.swiftmodule",
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteURL.swiftdeps",
     "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteURL.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Router.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Router~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.dia"
   },
   "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ServiceContainer.swift": {
     "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ServiceContainer.d",

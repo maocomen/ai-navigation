@@ -3,7 +3,7 @@ import AppBase
 
 /// 登录视图
 public struct LoginView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel = LoginViewModel()
     @State private var showWelcome = false
 
@@ -26,7 +26,7 @@ public struct LoginView: View {
         }
         .navigationTitle("登录")
         .alert("登录成功", isPresented: $showWelcome) {
-            Button("确定") { navigator.pop() }
+            Button("确定") { router.pop() }
         } message: {
             Text("欢迎回来，\(viewModel.username)！")
         }
@@ -85,7 +85,7 @@ public struct LoginView: View {
 
     private var registerLink: some View {
         Button("没有账号？立即注册") {
-            navigator.push(UserRoutes.Register())
+            router.push(UserRoutes.Register())
         }
         .font(.subheadline)
     }

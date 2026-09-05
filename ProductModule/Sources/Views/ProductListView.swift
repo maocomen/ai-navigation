@@ -3,7 +3,7 @@ import AppBase
 
 /// 商品列表视图（搜索 + 分类筛选 + 收藏）
 public struct ProductListView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel: ProductListViewModel
 
     public init(category: String) {
@@ -93,7 +93,7 @@ public struct ProductListView: View {
                             product: product,
                             isFavorite: viewModel.isFavorite(product.id)
                         ) {
-                            navigator.push(ProductRoutes.Detail(productID: product.id))
+                            router.push(ProductRoutes.Detail(productID: product.id))
                         } onFavorite: {
                             viewModel.toggleFavorite(product.id)
                         }

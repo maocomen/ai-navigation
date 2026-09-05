@@ -3,7 +3,7 @@ import AppBase
 
 /// 结算视图（下单 + 支付）
 public struct CheckoutView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel = CheckoutViewModel()
     @State private var showPaySuccess = false
 
@@ -21,7 +21,7 @@ public struct CheckoutView: View {
         }
         .navigationTitle("确认订单")
         .alert("支付成功", isPresented: $showPaySuccess) {
-            Button("查看订单") { navigator.popToRoot() }
+            Button("查看订单") { router.popToRoot() }
         } message: {
             Text("订单已进入待发货状态")
         }
@@ -87,7 +87,7 @@ public struct CheckoutView: View {
                     .cornerRadius(8)
             }
             Button("取消订单", role: .destructive) {
-                navigator.pop()
+                router.pop()
             }
         }
     }

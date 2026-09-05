@@ -3,7 +3,7 @@ import AppBase
 
 /// 订单列表视图
 public struct OrderListView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel = OrderListViewModel()
 
     public init() {}
@@ -12,7 +12,7 @@ public struct OrderListView: View {
         List {
             ForEach(viewModel.orders) { order in
                 Button {
-                    navigator.push(OrderRoutes.Detail(orderID: order.id))
+                    router.push(OrderRoutes.Detail(orderID: order.id))
                 } label: {
                     OrderRow(order: order)
                 }

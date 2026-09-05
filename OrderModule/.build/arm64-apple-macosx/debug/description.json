@@ -40,10 +40,6 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift"
-        },
-        {
-          "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift"
         },
         {
@@ -53,6 +49,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteURL.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Router.swift"
         },
         {
           "kind" : "file",
@@ -75,10 +75,10 @@
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleConfig.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleProtocol.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swift.o",
-        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteType.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteURL.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.swift.o",
         "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/ServiceContainer.swift.o"
       ],
       "otherArguments" : [
@@ -150,10 +150,6 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o"
-        },
-        {
-          "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o"
         },
         {
@@ -163,6 +159,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteURL.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build/Router.swift.o"
         },
         {
           "kind" : "file",
@@ -179,10 +179,10 @@
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift",
-        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteURL.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Router.swift",
         "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ServiceContainer.swift"
       ],
       "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/AppBase.build",
@@ -569,10 +569,10 @@
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift",
-      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteURL.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Router.swift",
       "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ServiceContainer.swift",
       "-I",
       "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/Modules",
@@ -868,10 +868,6 @@
         },
         {
           "kind" : "file",
-          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift"
-        },
-        {
-          "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift"
         },
         {
@@ -881,6 +877,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteURL.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Router.swift"
         },
         {
           "kind" : "file",

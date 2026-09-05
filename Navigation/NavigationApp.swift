@@ -18,7 +18,6 @@ struct NavigationApp: App {
         WindowGroup {
             ContentView()
                 .environment(router)
-                .environment(\.navigator, router)
         }
     }
 }

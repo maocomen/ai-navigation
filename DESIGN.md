@@ -1,6 +1,6 @@
 # Navigation 模块化路由框架 · 方案设计文档
 
-> 版本：1.5
+> 版本：1.6
 > 更新日期：2026-09-05
 > 技术栈：Swift 5.9+ / SwiftUI / iOS 17+ / Swift Package Manager
 
@@ -27,16 +27,16 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 ```
 ┌───────────────────────────────────────────────────────────────┐
 │                    Navigation (Host App)                       │
-│   NavigationApp / ContentView / HomeView / Router              │
-│              （聚合所有模块，唯一的路由栈管理者）                  │
+│   NavigationApp / ContentView / HomeView / Router+Convenience  │
+│              （聚合所有模块，提供便捷导航方法）                    │
 └──────┬──────────────┬──────────────┬──────────────┬────────────┘
        │              │              │              │
 ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐
 │UserContracts│ │ProductContracts│ │OrderContracts│ │   AppBase   │
-│ UserLinks   │ │ ProductLinks   │ │ OrderLinks   │ │ (基础设施)   │
-│             │ │               │ │ CartService  │ │ServiceContainer│
-└──────▲─────┘ └──────▲─────┘ └──────▲─────┘ └─────────────┘
-       │              │              │
+│ UserLinks   │ │ ProductLinks   │ │ OrderLinks   │ │ Router（具体类）│
+│             │ │               │ │ CartService  │ │ ModuleRegistry│
+└──────▲─────┘ └──────▲─────┘ └──────▲─────┘ │ ServiceContainer│
+       │              │              │         └─────────────┘
 ┌──────┴─────┐ ┌──────┴─────┐ ┌──────┴─────┐
 │ UserModule │ │ProductModule│ │OrderModule │  ← 业务模块 (SPM)
 │ (实现/视图) │ │ (实现/视图)  │ │ (实现/视图) │
@@ -44,10 +44,15 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 ```
 
 **依赖规则（单向）**：
+- 业务模块 → AppBase（`Router` 具体类 + 基础设施）
 - 业务模块 → 各自契约包（UserContracts / ProductContracts / OrderContracts）
-- 业务模块 → AppBase（纯基础设施）
 - 消费方 → 对方契约包（如 ProductModule → OrderContracts），但**不依赖对方实现模块**
 - 契约包之间无依赖，AppBase 无业务依赖
+
+**AppBase 核心职责**：
+- `Router`：运行时导航引擎（push/pop/navigate + 多 Tab 栈管理 + 字符串路由桥接）
+- `ModuleRegistry`：路由注册中心
+- `ServiceContainer`：依赖注入容器
 
 **契约包职责**：
 - `OrderContracts`：订单域链接常量（`OrderLinks`）+ 购物车服务协议（`CartService` + `CartItem`）
@@ -62,7 +67,7 @@ Navigation/
 ├── Navigation/                    # 主应用
 │   ├── NavigationApp.swift        # @main 入口，初始化各模块
 │   ├── ContentView.swift          # TabView + 独立导航栈 + 路由分发
-│   ├── Router.swift               # 路由器（实现 Navigator 协议，多 Tab 栈）
+│   ├── Router+Convenience.swift   # Router 便捷方法扩展（import 业务模块）
 │   ├── HomeView.swift             # 路由框架演示首页
 │   ├── DetailView.swift           # （占位）
 │   └── SettingView.swift          # （占位）
@@ -70,7 +75,7 @@ Navigation/
 │   ├── Package.swift
 │   └── Sources/
 │       ├── AppBase.swift          # 基础类 + AppConfig
-│       ├── Navigator.swift        # Navigator 协议 + Environment 注入
+│       ├── Router.swift           # 路由器（具体类，多 Tab 栈 + Environment 注入）
 │       ├── RouteType.swift        # RouteType 协议 + RouteBox + 路由工厂类型
 │       ├── RouteURL.swift         # 路由 URL 解析器
 │       ├── ModuleRegistry.swift   # 模块注册中心（路由 + 资源初始化）
@@ -129,7 +134,7 @@ Navigation/
 |------|------|------|
 | `RouteType` | AppBase/RouteType.swift | 所有路由统一遵守的协议，声明 `path` 与 `makeView()` |
 | `RouteBox` | AppBase/RouteType.swift | `NavigationPath` 的统一元素包装，保证 `navigationDestination` 稳定匹配 |
-| `Navigator` | AppBase/Navigator.swift | 跨模块导航抽象协议，通过 `@Environment(\.navigator)` 注入 |
+| `Router` | AppBase/Router.swift | 运行时导航引擎（具体类），持有各 Tab 独立路由栈，通过 `@Environment(Router.self)` 注入 |
 | `ModuleRegistry` | AppBase/ModuleRegistry.swift | 模块与路由的注册中心，支持实例路由与工厂路由，注册时初始化模块资源 |
 | `ModuleProtocol` | AppBase/ModuleProtocol.swift | 模块协议，声明 `registerRoutes` 与 `initializeResources` |
 | `RouteURL` | AppBase/RouteURL.swift | 路由 URL 解析器（scheme + path + query） |
@@ -138,35 +143,35 @@ Navigation/
 | `OrderLinks` | OrderContracts/OrderContracts.swift | 订单域链接常量（单一真相源） |
 | `ProductLinks` | ProductContracts/ProductContracts.swift | 商品域链接常量（单一真相源） |
 | `UserLinks` | UserContracts/UserContracts.swift | 用户域链接常量（单一真相源） |
-| `Router` | Navigation/Router.swift | 主应用中 `Navigator` 的 `@Observable` 实现，持有各 Tab 独立路由栈 |
+| `Router` | AppBase/Router.swift | 运行时导航引擎（具体类），持有各 Tab 独立路由栈 |
 | `RouteState` | AppBase/RouteState.swift | 路由历史条目与动作（push/pop/replace/reset） |
 | `*Repository` | 各模块 Repositories/ | 内存态数据仓库（user/product/order），承载业务数据 CRUD |
 | `*ViewModel` | 各模块 ViewModels/ | `@Observable` 逻辑层，封装校验、状态与业务编排 |
 
-### 3.2 关键协议
+### 3.2 关键类型
 
 ```swift
+// RouteType 协议 - 所有路由统一遵守
 public protocol RouteType: Hashable, Sendable {
     static var path: String { get }
-    @MainActor func makeView() -> AnyView   // 由模块自身提供视图
+    @MainActor func makeView() -> AnyView
 }
 
-public protocol Navigator: AnyObject {
-    func push(_ route: any RouteType)
-    func pop()
-    func popToRoot()
-    func replace(_ route: any RouteType)
-    func navigate(to path: String)
-    func navigate(to path: String, parameters: RouteParameters)
-    var count: Int { get }
+// Router - 运行时导航引擎（AppBase 具体类）
+@Observable @MainActor
+public final class Router {
+    public func push(_ route: any RouteType)
+    public func pop()
+    public func popToRoot()
+    public func replace(_ route: any RouteType)
+    public func navigate(to path: String, parameters: RouteParameters = [:])
+    @discardableResult public func navigate(url: URL) -> Bool
+    @discardableResult public func navigate(urlString: String) -> Bool
+    public var count: Int { get }
+    // + 多 Tab 栈管理、binding、isDetail 等
 }
 
-public extension Navigator {
-    /// 按路由类型跳转，path 自动取自 `T.path`，避免裸字符串
-    func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) {
-        navigate(to: T.path, parameters: parameters)
-    }
-}
+// 业务模块通过 @Environment(Router.self) 使用，无需协议抽象
 ```
 
 ### 3.3 三种跳转方式
@@ -182,7 +187,7 @@ router.push(ProductRoutes.Detail(productID: "p3"))
 
 ```swift
 router.navigate(UserRoutes.Profile.self, parameters: ["userID": "u42"])
-navigator.navigate(OrderRoutes.Cart.self)   // Navigator 协议扩展提供
+router.navigate(OrderRoutes.Cart.self)   // Router 直接支持按类型跳转
 ```
 
 **（3）URL / 字符串跳转** —— 深度链接 / 跨模块解耦
@@ -346,7 +351,7 @@ View ──用户交互──▶ ViewModel ──CRUD──▶ Repository（内�
 - **Model**：纯数据模型（`struct`），`Identifiable` / `Sendable`
 - **Repository**：内存态数据仓库，单例，`@unchecked Sendable` + `NSLock` 保证线程安全
 - **ViewModel**：`@Observable @MainActor`，持有 Repository 引用，封装校验与业务编排
-- **View**：仅绑定 ViewModel 状态，通过 `@Environment(\.navigator)` 触发导航
+- **View**：仅绑定 ViewModel 状态，通过 `@Environment(Router.self)` 触发导航
 
 ---
 
@@ -356,7 +361,7 @@ View ──用户交互──▶ ViewModel ──CRUD──▶ Repository（内�
 
 ```swift
 @Observable @MainActor
-final class Router: Navigator {
+public final class Router {
     enum Tab: String, CaseIterable, Hashable, Sendable {
         case home, product, order, profile
     }
@@ -547,6 +552,17 @@ public final class PaymentModule: ModuleProtocol {
 ---
 
 ## 10. 版本记录
+
+### v1.6（2026-09-05）
+
+**主题：Router 下沉到 AppBase + 删除 Navigator 协议**
+
+- `Router` 从主应用下沉到 AppBase 作为具体类（`public final class Router`）
+- 删除 `Navigator` 协议（不再需要抽象层），业务模块直接通过 `@Environment(Router.self)` 获取 Router 实例
+- 便捷方法（`goToXxx`）作为 Router 扩展留在主应用（`Router+Convenience.swift`），隔离业务模块依赖
+- 10 个业务模块 View：`@Environment(\.navigator)` → `@Environment(Router.self)`
+- `NavigationApp.swift` 简化为只注入 `.environment(router)`
+- 文档：更新架构图、目录结构、核心类型表、删除 Navigator 相关描述
 
 ### v1.5（2026-09-05）
 

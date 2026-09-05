@@ -623,18 +623,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AppBase;
 		};
-		DD04E057049C926009BEDC3 /* OrderContracts */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = OrderContracts;
-		};
-		DD04E057049C926009BEDC4 /* ProductContracts */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProductContracts;
-		};
-		DD04E057049C926009BEDC5 /* UserContracts */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UserContracts;
-		};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E2D5814630431C6000938869 /* Project object */;

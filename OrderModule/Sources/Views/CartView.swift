@@ -5,7 +5,7 @@ import ProductContracts
 
 /// 购物车视图
 public struct CartView: View {
-    @Environment(\.navigator) private var navigator
+    @Environment(Router.self) private var router
     @State private var viewModel = CartViewModel()
 
     public init() {}
@@ -32,7 +32,7 @@ public struct CartView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Button("浏览商品") {
-                navigator.navigate(to: ProductLinks.list)
+                router.navigate(to: ProductLinks.list)
             }
             .buttonStyle(.borderedProminent)
         }
@@ -77,7 +77,7 @@ public struct CartView: View {
                         .foregroundColor(.red)
                 }
                 Button {
-                    navigator.push(OrderRoutes.Checkout())
+                    router.push(OrderRoutes.Checkout())
                 } label: {
                     Text("去结算")
                         .frame(maxWidth: .infinity)
