@@ -58,6 +58,7 @@ private struct OrderRow: View {
         switch status {
         case .delivered: return .green
         case .shipping: return .orange
+        case .shipped: return .cyan
         case .pendingShipment: return .blue
         case .pendingPayment: return .purple
         case .cancelled: return .gray

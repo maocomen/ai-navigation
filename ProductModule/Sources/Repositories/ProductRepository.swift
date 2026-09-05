@@ -1,7 +1,9 @@
 import Foundation
+import Observation
 
 /// 商品仓库 - 内存态商品数据，支持分类/搜索/收藏
 /// 未来可替换为网络 / 数据库实现
+@Observable
 public final class ProductRepository: @unchecked Sendable {
     public static let shared = ProductRepository()
 
@@ -20,6 +22,14 @@ public final class ProductRepository: @unchecked Sendable {
             Product(id: "p6", name: "Studio Display", price: 11499, category: "显示器", icon: "display", detail: "27 英寸 5K Retina 显示屏"),
             Product(id: "p7", name: "Magic Keyboard", price: 2499, category: "配件", icon: "keyboard", detail: "带触控 ID 的背光妙控键盘"),
             Product(id: "p8", name: "HomePod mini", price: 749, category: "音箱", icon: "hifispeaker", detail: "360° 环绕声场，Siri 语音助手"),
+            Product(id: "p9", name: "MacBook Air 15\"", price: 12999, category: "电脑", icon: "laptopcomputer", detail: "M4 芯片，15.3 英寸 Liquid Retina 显示屏，无风扇设计"),
+            Product(id: "p10", name: "iPhone 17", price: 6999, category: "手机", icon: "iphone", detail: "A19 芯片，4800 万像素主摄"),
+            Product(id: "p11", name: "AirPods 4", price: 999, category: "配件", icon: "airpods", detail: "开放式佩戴，USB-C 充电"),
+            Product(id: "p12", name: "iPad Pro M4", price: 8999, category: "平板", icon: "ipad", detail: "11 英寸 OLED 显示屏，M4 芯片"),
+            Product(id: "p13", name: "Apple Watch Series 10", price: 2999, category: "手表", icon: "applewatch", detail: "铝金属表壳，全天候显示屏"),
+            Product(id: "p14", name: "Pro Display XDR", price: 39999, category: "显示器", icon: "display", detail: "32 英寸 6K Retina 显示屏，1600 尼特峰值亮度"),
+            Product(id: "p15", name: "AirTag 4 件装", price: 779, category: "配件", icon: "airtag", detail: "精确查找功能，超长续航"),
+            Product(id: "p16", name: "HomePod", price: 2299, category: "音箱", icon: "hifispeaker", detail: "空间音频，Siri 语音助手，智能家居中枢"),
         ]
     }
 

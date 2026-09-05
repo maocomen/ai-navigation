@@ -56,10 +56,12 @@ public final class OrderDetailViewModel {
     public var message: String?
 
     private let repository: OrderRepository
+    private let cart: CartService
 
-    public init(orderID: String, repository: OrderRepository = .shared) {
+    public init(orderID: String, repository: OrderRepository = .shared, cart: CartService? = nil) {
         self.orderID = orderID
         self.repository = repository
+        self.cart = cart ?? ServiceContainer.shared.resolve(CartService.self) ?? EmptyCartService()
     }
 
     public var order: Order? {
@@ -80,6 +82,26 @@ public final class OrderDetailViewModel {
     public func advance() {
         guard let o = repository.advance(orderID: orderID) else { return }
         message = "状态已更新为「\(o.status.rawValue)」"
+    }
+
+    /// 再来一单：将订单商品重新加入购物车
+    public func reorder() {
+        guard let order = repository.order(id: orderID) else { return }
+        for item in order.items {
+            cart.addItem(id: item.id, name: item.name, price: item.price, quantity: item.quantity)
+        }
+        message = "已将 \(order.totalCount) 件商品加入购物车"
+    }
+
+    /// 提交退款/售后申请
+    public func submitRefund(reason: RefundReason, detail: String) {
+        guard repository.order(id: orderID) != nil else { return }
+        var msg = "退款/售后申请已提交\n原因：\(reason.title)"
+        if !detail.isEmpty {
+            msg += "\n说明：\(detail)"
+        }
+        msg += "\n\n预计 1-2 个工作日内处理，请耐心等待"
+        message = msg
     }
 }
 

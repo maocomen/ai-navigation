@@ -1,9 +1,11 @@
 import Foundation
+import Observation
 import AppBase
 import OrderContracts
 
 /// 订单仓库 - 内存态订单数据，负责下单、支付、状态流转
 /// 未来可替换为网络 / 数据库实现
+@Observable
 public final class OrderRepository: @unchecked Sendable {
     public static let shared = OrderRepository()
 

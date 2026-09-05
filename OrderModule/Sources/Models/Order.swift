@@ -4,6 +4,7 @@ import Foundation
 public enum OrderStatus: String, Codable, CaseIterable, Sendable {
     case pendingPayment = "待支付"
     case pendingShipment = "待发货"
+    case shipped = "已发货"
     case shipping = "配送中"
     case delivered = "已送达"
     case cancelled = "已取消"
@@ -12,7 +13,8 @@ public enum OrderStatus: String, Codable, CaseIterable, Sendable {
     public var next: OrderStatus? {
         switch self {
         case .pendingPayment: return .pendingShipment   // 支付后 -> 待发货
-        case .pendingShipment: return .shipping         // 发货 -> 配送中
+        case .pendingShipment: return .shipped          // 发货 -> 已发货
+        case .shipped: return .shipping                 // 开始配送 -> 配送中
         case .shipping: return .delivered               // 签收 -> 已送达
         case .delivered: return nil
         case .cancelled: return nil
