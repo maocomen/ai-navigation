@@ -1,0 +1,3 @@
+module UserModule {
+    header "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/include/UserModule-Swift.h"
+}

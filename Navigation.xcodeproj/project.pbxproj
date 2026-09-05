@@ -3,8 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 110;
+	objectVersion = 77;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		AA01B025049C926009BEDC1 /* UserModule in Frameworks */ = {isa = PBXBuildFile; productRef = AA01B024049C926009BEDC1 /* UserModule */; };
+		BB02C035049C926009BEDC1 /* ProductModule in Frameworks */ = {isa = PBXBuildFile; productRef = BB02C034049C926009BEDC1 /* ProductModule */; };
+		CC03D045049C926009BEDC1 /* OrderModule in Frameworks */ = {isa = PBXBuildFile; productRef = CC03D044049C926009BEDC1 /* OrderModule */; };
+		E201BAA33049C926009BEDC1 /* AppBase in Frameworks */ = {isa = PBXBuildFile; productRef = E201BAA23049C926009BEDC1 /* AppBase */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		E2D5815C30431C6200938869 /* PBXContainerItemProxy */ = {
@@ -51,6 +58,10 @@
 		E2D5814B30431C6000938869 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				E201BAA33049C926009BEDC1 /* AppBase in Frameworks */,
+				AA01B025049C926009BEDC1 /* UserModule in Frameworks */,
+				BB02C035049C926009BEDC1 /* ProductModule in Frameworks */,
+				CC03D045049C926009BEDC1 /* OrderModule in Frameworks */,
 			);
 		};
 		E2D5815830431C6200938869 /* Frameworks */ = {
@@ -103,6 +114,12 @@
 				E2D5815030431C6000938869 /* Navigation */,
 			);
 			name = Navigation;
+			packageProductDependencies = (
+				E201BAA23049C926009BEDC1 /* AppBase */,
+				AA01B024049C926009BEDC1 /* UserModule */,
+				BB02C034049C926009BEDC1 /* ProductModule */,
+				CC03D044049C926009BEDC1 /* OrderModule */,
+			);
 			productName = Navigation;
 			productReference = E2D5814E30431C6000938869 /* Navigation.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +198,12 @@
 			);
 			mainGroup = E2D5814530431C6000938869;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E201BAA13049C926009BEDC1 /* XCLocalSwiftPackageReference "AppBase" */,
+				AA01B023049C926009BEDC1 /* XCLocalSwiftPackageReference "UserModule" */,
+				BB02C033049C926009BEDC1 /* XCLocalSwiftPackageReference "ProductModule" */,
+				CC03D043049C926009BEDC1 /* XCLocalSwiftPackageReference "OrderModule" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E2D5814F30431C6000938869 /* Products */;
 			projectDirPath = "";
@@ -548,6 +571,44 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA01B023049C926009BEDC1 /* XCLocalSwiftPackageReference "UserModule" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = UserModule;
+		};
+		BB02C033049C926009BEDC1 /* XCLocalSwiftPackageReference "ProductModule" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ProductModule;
+		};
+		CC03D043049C926009BEDC1 /* XCLocalSwiftPackageReference "OrderModule" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = OrderModule;
+		};
+		E201BAA13049C926009BEDC1 /* XCLocalSwiftPackageReference "AppBase" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppBase;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA01B024049C926009BEDC1 /* UserModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserModule;
+		};
+		BB02C034049C926009BEDC1 /* ProductModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProductModule;
+		};
+		CC03D044049C926009BEDC1 /* OrderModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OrderModule;
+		};
+		E201BAA23049C926009BEDC1 /* AppBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppBase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E2D5814630431C6000938869 /* Project object */;
 	validationLevel = 1;

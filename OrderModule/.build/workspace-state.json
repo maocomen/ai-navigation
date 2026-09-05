@@ -1,0 +1,27 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "appbase",
+          "kind" : "fileSystem",
+          "location" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase",
+          "name" : "AppBase"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase"
+        },
+        "subpath" : "appbase"
+      }
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}

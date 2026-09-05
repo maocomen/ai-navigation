@@ -1,0 +1,500 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.AppBase-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/sources",
+      "importPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "AppBase",
+      "moduleOutputPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule",
+      "objects" : [
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/AppBase.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/CartManager.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleConfig.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleProtocol.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteType.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j20",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/include/AppBase-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "appbase"
+      ],
+      "outputFileMapPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/AppBase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/CartManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleConfig.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleProtocol.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift",
+        "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift"
+      ],
+      "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.UserModule-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/sources",
+      "importPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "UserModule",
+      "moduleOutputPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/UserModule.swiftmodule",
+      "objects" : [
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j20",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/include/UserModule-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "usermodule"
+      ],
+      "outputFileMapPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/UserRoutes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules/UserModule.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+      ],
+      "tempsPath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "AppBase" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "AppBase",
+      "-package-name",
+      "appbase",
+      "-c",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift",
+      "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift",
+      "-I",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j20",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/include/AppBase-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "appbase",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "UserModule" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "UserModule",
+      "-package-name",
+      "usermodule",
+      "-c",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift",
+      "-I",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j20",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/include/UserModule-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "usermodule",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "AppBase" : [
+
+    ],
+    "UserModule" : [
+      "AppBase"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/AppBase.build/sources"
+    },
+    "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/Sources/UserRoutes.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/UserModule.build/sources"
+    },
+    "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/appple/Documents/Demo/iOS/Navigation/UserModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

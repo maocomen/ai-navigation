@@ -1,0 +1,3 @@
+module AppBase {
+    header "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/include/AppBase-Swift.h"
+}

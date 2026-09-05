@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/primary.swiftdeps"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Tests/AppBaseTests/AppBaseTests.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/AppBaseTests.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/AppBaseTests.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/AppBaseTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/AppBaseTests.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/AppBaseTests.dia"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Tests/RoutingTests/RouteTests.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/RouteTests.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/RouteTests.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/RouteTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/RouteTests.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/AppBase/.build/arm64-apple-macosx/debug/AppBaseTests.build/RouteTests.dia"
+  }
+}

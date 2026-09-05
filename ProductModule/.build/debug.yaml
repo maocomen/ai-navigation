@@ -1,0 +1,66 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "AppBase-arm64-apple-macosx-debug.module": ["<AppBase-arm64-apple-macosx-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "ProductModule-arm64-apple-macosx-debug.module": ["<ProductModule-arm64-apple-macosx-debug.module>"]
+  "main": ["<ProductModule-arm64-apple-macosx-debug.module>"]
+  "test": ["<ProductModule-arm64-apple-macosx-debug.module>"]
+default: "main"
+nodes:
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift"]
+    outputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/sources"]
+    description: "Write auxiliary file /Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/sources"
+
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift"]
+    outputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources"]
+    description: "Write auxiliary file /Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources"
+
+  "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<AppBase-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/AppBase.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/CartManager.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleConfig.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleProtocol.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteType.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule"]
+    outputs: ["<AppBase-arm64-apple-macosx-debug.module>"]
+
+  "<ProductModule-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/ProductModule.swiftmodule"]
+    outputs: ["<ProductModule-arm64-apple-macosx-debug.module>"]
+
+  "C.AppBase-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/AppBase.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/CartManager.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleConfig.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleProtocol.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/ModuleRegistry.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/Navigator.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteState.swift","/Users/appple/Documents/Demo/iOS/Navigation/AppBase/Sources/RouteType.swift","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/sources"]
+    outputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/AppBase.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/CartManager.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleConfig.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleProtocol.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/ModuleRegistry.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/Navigator.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteState.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/RouteType.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule"]
+    description: "Compiling Swift Module 'AppBase' (8 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","AppBase","-emit-dependencies","-emit-module","-emit-module-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule","-output-file-map","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/sources","-I","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j20","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/AppBase.build/include/AppBase-Swift.h","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","appbase"]
+
+  "C.ProductModule-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/ProductRoutes.swift","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/AppBase.swiftmodule","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources"]
+    outputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/ProductRoutes.swift.o","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/ProductModule.swiftmodule"]
+    description: "Compiling Swift Module 'ProductModule' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","ProductModule","-emit-dependencies","-emit-module","-emit-module-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules/ProductModule.swiftmodule","-output-file-map","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/sources","-I","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j20","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/ProductModule.build/include/ProductModule-Swift.h","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","productmodule"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Sources/","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Package.swift","/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
