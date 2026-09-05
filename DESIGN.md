@@ -1,6 +1,6 @@
 # Navigation 模块化路由框架 · 方案设计文档
 
-> 版本：1.1
+> 版本：1.5
 > 更新日期：2026-09-05
 > 技术栈：Swift 5.9+ / SwiftUI / iOS 17+ / Swift Package Manager
 
@@ -25,23 +25,34 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 ### 2.1 分层结构
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    Navigation (Host App)             │
-│   NavigationApp / ContentView / HomeView / Router    │
-│              （聚合所有模块，唯一的路由栈管理者）        │
-└──────────────┬──────────────┬──────────────┬─────────┘
-               │              │              │
-        ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐
-        │ UserModule │ │ProductModule│ │OrderModule │  ← 业务模块 (SPM)
-        └──────┬─────┘ └──────┬─────┘ └──────┬─────┘
-               │              │              │
-               └──────────────┼──────────────┘
-                       ┌──────▼─────┐
-                       │  AppBase   │  ← 基础库 (SPM)
-                       └────────────┘
+┌───────────────────────────────────────────────────────────────┐
+│                    Navigation (Host App)                       │
+│   NavigationApp / ContentView / HomeView / Router              │
+│              （聚合所有模块，唯一的路由栈管理者）                  │
+└──────┬──────────────┬──────────────┬──────────────┬────────────┘
+       │              │              │              │
+┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐
+│UserContracts│ │ProductContracts│ │OrderContracts│ │   AppBase   │
+│ UserLinks   │ │ ProductLinks   │ │ OrderLinks   │ │ (基础设施)   │
+│             │ │               │ │ CartService  │ │ServiceContainer│
+└──────▲─────┘ └──────▲─────┘ └──────▲─────┘ └─────────────┘
+       │              │              │
+┌──────┴─────┐ ┌──────┴─────┐ ┌──────┴─────┐
+│ UserModule │ │ProductModule│ │OrderModule │  ← 业务模块 (SPM)
+│ (实现/视图) │ │ (实现/视图)  │ │ (实现/视图) │
+└────────────┘ └────────────┘ └────────────┘
 ```
 
-依赖方向严格单向：**业务模块 → AppBase → 系统框架**。主应用同时依赖 AppBase 与所有业务模块。
+**依赖规则（单向）**：
+- 业务模块 → 各自契约包（UserContracts / ProductContracts / OrderContracts）
+- 业务模块 → AppBase（纯基础设施）
+- 消费方 → 对方契约包（如 ProductModule → OrderContracts），但**不依赖对方实现模块**
+- 契约包之间无依赖，AppBase 无业务依赖
+
+**契约包职责**：
+- `OrderContracts`：订单域链接常量（`OrderLinks`）+ 购物车服务协议（`CartService` + `CartItem`）
+- `ProductContracts`：商品域链接常量（`ProductLinks`）
+- `UserContracts`：用户域链接常量（`UserLinks`）
 
 ### 2.2 目录结构
 
@@ -60,12 +71,25 @@ Navigation/
 │   └── Sources/
 │       ├── AppBase.swift          # 基础类 + AppConfig
 │       ├── Navigator.swift        # Navigator 协议 + Environment 注入
-│       ├── RouteType.swift        # RouteType 协议 + 路由工厂类型
-│       ├── ModuleRegistry.swift   # 模块注册中心（含路由工厂解析 + 资源初始化）
+│       ├── RouteType.swift        # RouteType 协议 + RouteBox + 路由工厂类型
+│       ├── RouteURL.swift         # 路由 URL 解析器
+│       ├── ModuleRegistry.swift   # 模块注册中心（路由 + 资源初始化）
 │       ├── ModuleProtocol.swift   # 模块协议
 │       ├── ModuleConfig.swift     # 模块配置
-│       ├── RouteState.swift       # 路由状态 / 动作枚举
-│       └── CartManager.swift      # 跨模块共享状态（购物车）
+│       ├── ServiceContainer.swift # 依赖注入容器（跨模块服务共享）
+│       └── RouteState.swift       # 路由状态 / 动作枚举
+├── OrderContracts/                 # 订单域契约包 (SPM · 链接常量 + 服务协议)
+│   ├── Package.swift
+│   └── Sources/
+│       └── OrderContracts.swift    # OrderLinks（链接常量）+ CartService 协议 + CartItem 模型
+├── ProductContracts/               # 商品域契约包 (SPM · 链接常量)
+│   ├── Package.swift
+│   └── Sources/
+│       └── ProductContracts.swift  # ProductLinks（链接常量）
+├── UserContracts/                  # 用户域契约包 (SPM · 链接常量)
+│   ├── Package.swift
+│   └── Sources/
+│       └── UserContracts.swift     # UserLinks（链接常量）
 ├── UserModule/                    # 用户模块 (SPM · MVVM)
 │   └── Sources/
 │       ├── Models/User.swift
@@ -84,6 +108,7 @@ Navigation/
 │   └── Sources/
 │       ├── Models/Order.swift
 │       ├── Repositories/OrderRepository.swift
+│       ├── Repositories/CartServiceImpl.swift  # 购物车服务实现（实现 CartService）
 │       ├── ViewModels/OrderViewModels.swift
 │       ├── Views/{Cart,OrderList,OrderDetail,Checkout}View.swift
 │       └── OrderModule.swift      # 路由定义 + 模块注册
@@ -103,9 +128,16 @@ Navigation/
 | 类型 | 位置 | 职责 |
 |------|------|------|
 | `RouteType` | AppBase/RouteType.swift | 所有路由统一遵守的协议，声明 `path` 与 `makeView()` |
+| `RouteBox` | AppBase/RouteType.swift | `NavigationPath` 的统一元素包装，保证 `navigationDestination` 稳定匹配 |
 | `Navigator` | AppBase/Navigator.swift | 跨模块导航抽象协议，通过 `@Environment(\.navigator)` 注入 |
 | `ModuleRegistry` | AppBase/ModuleRegistry.swift | 模块与路由的注册中心，支持实例路由与工厂路由，注册时初始化模块资源 |
 | `ModuleProtocol` | AppBase/ModuleProtocol.swift | 模块协议，声明 `registerRoutes` 与 `initializeResources` |
+| `RouteURL` | AppBase/RouteURL.swift | 路由 URL 解析器（scheme + path + query） |
+| `ServiceContainer` | AppBase/ServiceContainer.swift | 依赖注入容器，跨模块服务按协议注册/解析 |
+| `CartService` | OrderContracts/OrderContracts.swift | 购物车服务协议（订单域契约包，跨模块共享） |
+| `OrderLinks` | OrderContracts/OrderContracts.swift | 订单域链接常量（单一真相源） |
+| `ProductLinks` | ProductContracts/ProductContracts.swift | 商品域链接常量（单一真相源） |
+| `UserLinks` | UserContracts/UserContracts.swift | 用户域链接常量（单一真相源） |
 | `Router` | Navigation/Router.swift | 主应用中 `Navigator` 的 `@Observable` 实现，持有各 Tab 独立路由栈 |
 | `RouteState` | AppBase/RouteState.swift | 路由历史条目与动作（push/pop/replace/reset） |
 | `*Repository` | 各模块 Repositories/ | 内存态数据仓库（user/product/order），承载业务数据 CRUD |
@@ -128,22 +160,36 @@ public protocol Navigator: AnyObject {
     func navigate(to path: String, parameters: RouteParameters)
     var count: Int { get }
 }
+
+public extension Navigator {
+    /// 按路由类型跳转，path 自动取自 `T.path`，避免裸字符串
+    func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) {
+        navigate(to: T.path, parameters: parameters)
+    }
+}
 ```
 
-### 3.3 两种跳转方式
+### 3.3 三种跳转方式
 
-**（1）类型安全跳转** —— 直接构造路由实例
+**（1）类型安全跳转** —— 直接构造路由实例 push
 
 ```swift
 router.push(UserRoutes.Profile(userID: "u42"))
 router.push(ProductRoutes.Detail(productID: "p3"))
 ```
 
-**（2）字符串路由跳转** —— 深度链接 / 跨模块解耦
+**（2）按路由类型跳转** —— 引用 `T.Type`，path 自动解析（推荐用于模块内/有依赖的场景）
 
 ```swift
-router.navigate(to: "user/profile", parameters: ["userID": "u42"])
-router.navigate(to: "order/cart")   // 无参重载
+router.navigate(UserRoutes.Profile.self, parameters: ["userID": "u42"])
+navigator.navigate(OrderRoutes.Cart.self)   // Navigator 协议扩展提供
+```
+
+**（3）URL / 字符串跳转** —— 深度链接 / 跨模块解耦
+
+```swift
+router.navigate(to: "order/cart")
+router.navigate(urlString: "navigate://user/profile?userID=u42")
 ```
 
 ### 3.4 参数化路由解析（路由工厂）
@@ -151,8 +197,8 @@ router.navigate(to: "order/cart")   // 无参重载
 字符串路由通过 **路由工厂** 实现参数化构建，解决「无参预注册实例无法携带参数」的痛点：
 
 ```swift
-// 模块注册时，带参路由注册工厂而非固定实例
-registry.addRouteFactory("user/profile") { params in
+// 模块注册时，带参路由注册工厂（path 自动取自 T.path，避免二次硬编码）
+registry.addRouteFactory(UserRoutes.Profile.self) { params in
     UserRoutes.Profile(userID: params["userID"] as? String ?? "user123")
 }
 
@@ -160,55 +206,132 @@ registry.addRouteFactory("user/profile") { params in
 registry.addRoute(OrderRoutes.Cart())
 ```
 
+`addRouteFactory` 提供两个重载：`(T.Type)` 与 `(String)`。前者推荐，由 `T.path` 提供路径，与路由类型强绑定，不会漂移。
+
 `ModuleRegistry.resolveRoute(for:parameters:)` 解析优先级：**工厂 > 固定实例**。
 
-### 3.5 视图分发（数据流）
+### 3.5 路由 URL 设计
+
+统一 URL 格式：
 
 ```
-View 触发 →  Router.push/navigate  →  ModuleRegistry 解析  →  path.append(route)
+<scheme>://<module>/<action>?key1=value1&key2=value2
+```
+
+- **scheme**：自定义固定 scheme（当前 `navigate`），供 App 内/外深度链接
+- **path**：与 `RouteType.path` 对齐的「模块/动作」，如 `user/profile`
+- **query**：路由参数，统一按 `[String: String]` 解析，类型由路由工厂二次转换
+
+示例：
+
+```
+navigate://user/login
+navigate://user/profile?userID=u42
+navigate://product/detail?productID=p3
+navigate://order/cart
+navigate://order/detail?orderID=order1
+```
+
+入口：`RouteURL`（AppBase/RouteURL.swift）支持从 `URL` 或字符串解析（缺 scheme 自动补全）：
+
+```swift
+router.navigate(urlString: "navigate://user/profile?userID=u42")  // Bool 返回成败
+router.navigate(url: someURL)
+```
+
+### 3.6 path 维护策略（减少硬编码）
+
+`RouteType.path` 是**唯一权威来源**，各层引用方式：
+
+| 场景 | 做法 | 是否硬编码 |
+|------|------|-----------|
+| 模块注册路由 | `addRouteFactory(T.self)` / `addRoute(route)` | ❌ 自动取 `T.path` |
+| 模块内跳转 | `navigate(T.self, parameters:)` | ❌ 自动取 `T.path` |
+| 主应用便捷方法 | `goToXxx` 内 `navigate(UserRoutes.Login.self)` | ❌ 引用 `T` |
+| 演示 UI 展示 | `UserRoutes.Login.path` | ❌ 引用 `T` |
+| **跨模块跳转** | `navigate(to: "order/cart")` | ✅ 不可避免（模块间无依赖） |
+
+> **跨模块字符串是深度链接的固有本质**：模块 A 不 import 模块 B，只能通过 path 字符串（即 URL 的 path 部分）跳转。这正是 `RouteURL` 存在的意义——字符串即 URL，统一走深度链接语义。结论：**不额外引入枚举/常量叠一层真相源，`RouteType.path` 即权威**。
+
+### 3.7 视图分发（数据流）
+
+```
+View 触发 →  Router.push/navigate  →  ModuleRegistry 解析  →  path.append(RouteBox(route))
    ↓
 NavigationStack(path: $router.path)
    ↓
-navigationDestination(for: AnyHashable.self)
+navigationDestination(for: RouteBox.self)
    ↓
-routeDestination(for:)  →  (value as? any RouteType)  →  route.makeView()
+routeDestination(for:)  →  box.route.makeView()
 ```
 
-主应用通过 `AnyHashable` 动态分发，**只需识别「是否为 RouteType」并调用 `makeView()`**，无需感知任何具体路由类型——新增模块无需改动主应用。
+> `Router.push` 将路由包装为 `RouteBox` 后再入栈。原因是 `NavigationPath` 与 `navigationDestination` 均按**具体类型**匹配，若直接 `append(any RouteType)`，元素类型是各自的具体路由类型，无法与 `AnyHashable.self` 匹配，导致二级页面不展示。统一包装为 `RouteBox` 后类型恒定，即可稳定匹配并动态解包到具体视图，主应用无需感知任何具体路由类型——新增模块无需改动主应用。
 
 ---
 
 ## 4. 跨模块通信与状态共享
 
-### 4.1 共享状态：`CartManager`
+跨模块通信分为两类，采用**不同策略**：
 
-`ProductModule` 与 `OrderModule` 通过全局单例 `CartManager` 共享购物车状态：
+### 4.1 跨模块导航：链接常量 + 字符串路由
 
-- `ProductDetailView`（ProductModule）→ `CartManager.shared.addItem(...)`（`ProductDetailViewModel` 内封装）
-- `CartView`（OrderModule）→ `CartViewModel` 观察 `CartManager.shared` 实时展示
-- `OrderRepository.placeOrder(cart:)`（OrderModule）→ 下单时从购物车读取商品生成订单并清空购物车
+模块间跳转统一走**字符串路由（URL 语义）**，路径权威源收敛到各域契约包的链接常量，`ProductModule` 无需 import `OrderModule`：
 
 ```swift
-public final class CartManager: ObservableObject, @unchecked Sendable {
-    public static let shared = CartManager()
-    @Published public var items: [CartItem] = []
-    // addItem / removeItem / clear / totalCount / totalPrice
+// ServiceContracts：链接常量（单一真相源，换链接只改一处）
+public enum OrderLinks {
+    public static let cart = "order/cart"
+    public static let list = "order/list"
+    ...
+}
+
+// ProductDetailView 中"查看购物车"（引用契约常量，非硬编码字符串）
+navigator.navigate(to: OrderLinks.cart)
+
+// UserProfileView 中"查看订单"
+navigator.navigate(to: OrderLinks.list)
+```
+
+> **路径收敛**：`RouteType.path` 也引用同一契约常量（`OrderRoutes.Cart.path → OrderLinks.cart`），确保「路由注册」与「跨模块调用」共享单一真相源，换链接改一处编译期全局生效。
+
+### 4.2 跨模块共享状态：协议 + DI 容器
+
+购物车状态通过 **协议/实现分离 + 依赖注入容器** 实现跨模块共享：
+
+- **OrderContracts（契约包）**：定义 `CartService` 协议 + `CartItem` 值类型，供拥有方/消费方共同依赖
+- **AppBase（基础设施层）**：`ServiceContainer`（DI 容器），只承载通用机制，不侵入业务语义
+- **OrderModule（拥有方）**：`CartServiceImpl` 实现 `CartService`，在 `initializeResources` 中注册到容器
+- **ProductModule（消费方）**：`ProductDetailViewModel` 只依赖 `CartService` 协议，从容器解析实例
+
+```swift
+// OrderContracts：协议（独立契约包，既不归 AppBase 也不归业务模块）
+@MainActor
+public protocol CartService: AnyObject { ... }
+
+// OrderModule：实现（购物车是订单域概念，实现归归属模块）
+@Observable @MainActor
+public final class CartServiceImpl: CartService { ... }
+
+// OrderModule 初始化时注册
+ServiceContainer.shared.register(CartService.self, instance: CartServiceImpl.shared)
+
+// ProductModule：按协议解析，不依赖具体类
+private let cart: CartService
+init(cart: CartService? = nil) {
+    self.cart = cart ?? ServiceContainer.shared.resolve(CartService.self) ?? EmptyCartService()
 }
 ```
 
-> `CartManager` 定位为「跨模块共享的购物车状态」，而订单的持久化与业务流转则由 `OrderModule` 的 `OrderRepository` 负责，二者职责分离。
+**设计要点**：
 
-### 4.2 跨模块导航
+| 原则 | 说明 |
+|------|------|
+| 契约独立 | `CartService` 置于 `OrderContracts` 契约包，避免基础设施层侵入业务语义 |
+| 实现归位 | 购物车是订单域概念，`CartServiceImpl` 归 OrderModule |
+| 面向协议 | 消费方（ProductModule）只依赖协议，可替换实现、可 mock 测试 |
+| 职责分工 | `ModuleRegistry` 管**路由**，`ServiceContainer` 管**服务** |
 
-模块间跳转统一走字符串路由，`ProductModule` 无需 import `OrderModule`：
-
-```swift
-// ProductDetailView 中“查看购物车”
-navigator.navigate(to: "order/cart")
-
-// UserProfileView 中“查看订单”
-navigator.navigate(to: "order/list")
-```
+> 为何不把 `CartService` 放 AppBase：AppBase 应保持「纯基础设施」定位，放业务契约会使其被迫感知「购物车」这一领域概念。独立契约包既让契约可独立演进，又避免消费方依赖拥有方模块。
 
 ### 4.3 模块内 MVVM 数据流
 
@@ -424,6 +547,51 @@ public final class PaymentModule: ModuleProtocol {
 ---
 
 ## 10. 版本记录
+
+### v1.5（2026-09-05）
+
+**主题：每模块独立契约包 + 链接常量 + path 收敛**
+
+- 废弃 `ServiceContracts` 统一契约包，拆分为三个域契约包：`OrderContracts`、`ProductContracts`、`UserContracts`
+- 每个契约包内维护「链接常量」（`OrderLinks` / `ProductLinks` / `UserLinks`），跨模块跳转引用常量而非裸字符串
+- `RouteType.path` 收敛到契约常量（`OrderRoutes.Cart.path → OrderLinks.cart`），路由注册与跨模块调用共享单一真相源
+- `CartService` + `CartItem` 迁入 `OrderContracts`（购物车属订单域）
+- 消费方（ProductView → 购物车、CartView → 商品列表等）改引用 `*Links` 常量
+- `project.pbxproj` 移除 ServiceContracts 引用，新增三个契约包引用
+- 文档：更新分层结构图、目录结构、第 4 章（链接常量 + path 收敛）、核心类型表
+
+### v1.4（2026-09-05）
+
+**主题：跨模块契约拆分为独立 ServiceContracts 包**
+
+- 新增 `ServiceContracts` SPM 包，承载跨模块共享契约（`CartService` 协议 + `CartItem` 模型）
+- `CartService` 从 AppBase 迁出，AppBase 回归纯基础设施职责（不再侵入业务语义）
+- ProductModule / OrderModule 增加 `../ServiceContracts` 依赖，源文件补 `import ServiceContracts`
+- 主应用 `project.pbxproj` 注册 `ServiceContracts` 本地包引用
+- 文档：更新分层结构图、目录结构、第 4.2 章、核心类型表
+
+### v1.3（2026-09-05）
+
+**主题：跨模块共享状态引入协议/实现分离 + 依赖注入容器**
+
+- 跨模块通信分两类治理：**导航走字符串路由**（保留深度链接语义，不引入导航协议层），**状态共享走协议 + DI**
+- AppBase 新增 `CartService` 协议 + `CartItem` 值类型 + `ServiceContainer`（轻量 DI 容器，管服务）
+- OrderModule 新增 `CartServiceImpl` 实现 `CartService`，`initializeResources` 时注册到容器
+- ProductModule `ProductDetailViewModel` 改为依赖 `CartService` 协议（从容器解析），实现可替换、可 mock
+- OrderModule `OrderRepository.placeOrder(cart:)` 参数改为 `CartService` 协议
+- 删除 AppBase `CartManager` 具体类（迁移为 `CartServiceImpl`）
+- 文档：更新第 4 章跨模块通信、目录结构、核心类型表
+
+### v1.2（2026-09-05）
+
+**主题：二级页面展示修复、TabBar 显隐、路由 URL 与 path 收敛**
+
+- 修复二级页面不展示：引入 `RouteBox` 统一 `NavigationPath` 元素类型，`navigationDestination(for: RouteBox.self)` 稳定匹配
+- TabBar 隐显提至 `NavigationStack` 层（`Router.isDetail` 驱动），推送转场与 tabBar 收起合并为同一动画
+- 新增 `RouteURL` 解析器，支持 `navigate://module/action?k=v` 格式；`Router` 新增 `navigate(url:)` / `navigate(urlString:)`（返回成败）
+- path 收敛：`RouteType.path` 为唯一权威源，`addRouteFactory(T.self)`、`navigate(T.self)` 消除硬编码；跨模块字符串保留为深度链接语义
+- 便捷方法 `goToXxx` 引用各模块 `T.path`；演示 UI 展示改用 `T.path`
+- 文档：扩充路由机制（URL 设计、path 维护策略、三种跳转方式）
 
 ### v1.1（2026-09-05）
 

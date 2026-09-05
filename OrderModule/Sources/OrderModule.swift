@@ -1,12 +1,13 @@
 import SwiftUI
 import AppBase
+import OrderContracts
 
 // MARK: - 路由定义
 
 public enum OrderRoutes {
 
     public struct Cart: RouteType {
-        public static var path: String { "order/cart" }
+        public static var path: String { OrderLinks.cart }
         public init() {}
         public static func == (lhs: Cart, rhs: Cart) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("cart") }
@@ -14,7 +15,7 @@ public enum OrderRoutes {
     }
 
     public struct List: RouteType {
-        public static var path: String { "order/list" }
+        public static var path: String { OrderLinks.list }
         public init() {}
         public static func == (lhs: List, rhs: List) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("orderlist") }
@@ -22,7 +23,7 @@ public enum OrderRoutes {
     }
 
     public struct Detail: RouteType {
-        public static var path: String { "order/detail" }
+        public static var path: String { OrderLinks.detail }
         public let orderID: String
         public init(orderID: String) { self.orderID = orderID }
         public static func == (lhs: Detail, rhs: Detail) -> Bool { lhs.orderID == rhs.orderID }
@@ -31,7 +32,7 @@ public enum OrderRoutes {
     }
 
     public struct Checkout: RouteType {
-        public static var path: String { "order/checkout" }
+        public static var path: String { OrderLinks.checkout }
         public init() {}
         public static func == (lhs: Checkout, rhs: Checkout) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("checkout") }
@@ -50,13 +51,16 @@ public final class OrderModule: ModuleProtocol {
         registry.addRoute(OrderRoutes.Cart())
         registry.addRoute(OrderRoutes.List())
         registry.addRoute(OrderRoutes.Checkout())
-        registry.addRouteFactory("order/detail") { params in
+        registry.addRouteFactory(OrderRoutes.Detail.self) { params in
             guard let orderID = params["orderID"] as? String else { return nil }
             return OrderRoutes.Detail(orderID: orderID)
         }
     }
 
-    public func initializeResources() {}
+    public func initializeResources() {
+        let cart = MainActor.assumeIsolated { CartServiceImpl.shared }
+        ServiceContainer.shared.register(CartService.self, instance: cart)
+    }
 
     public static func initialize() {
         ModuleRegistry.shared.registerModule(OrderModule())

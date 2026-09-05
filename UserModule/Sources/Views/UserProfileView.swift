@@ -1,5 +1,7 @@
 import SwiftUI
 import AppBase
+import OrderContracts
+import ProductContracts
 
 /// 用户主页视图
 public struct UserProfileView: View {
@@ -71,8 +73,8 @@ public struct UserProfileView: View {
             } else {
                 Button("编辑资料") { viewModel.beginEditing() }
             }
-            Button("查看订单") { navigator.navigate(to: "order/list") }
-            Button("浏览商品") { navigator.navigate(to: "product/list") }
+            Button("查看订单") { navigator.navigate(to: OrderLinks.list) }
+            Button("浏览商品") { navigator.navigate(to: ProductLinks.list) }
             Button("账号设置") { navigator.push(UserRoutes.Settings()) }
         }
 

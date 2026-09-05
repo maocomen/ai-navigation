@@ -1,21 +1,22 @@
 import Foundation
 import SwiftUI
 import AppBase
+import OrderContracts
 
 // MARK: - 购物车 ViewModel
 
 @Observable
 @MainActor
 public final class CartViewModel {
-    public let cart: CartManager
+    public let cart: CartServiceImpl
     private let orderRepository: OrderRepository
 
-    public init(cart: CartManager = .shared, orderRepository: OrderRepository = .shared) {
-        self.cart = cart
+    public init(cart: CartServiceImpl? = nil, orderRepository: OrderRepository = .shared) {
+        self.cart = cart ?? CartServiceImpl.shared
         self.orderRepository = orderRepository
     }
 
-    public var items: [CartManager.CartItem] { cart.items }
+    public var items: [CartItem] { cart.items }
     public var isEmpty: Bool { cart.items.isEmpty }
     public var totalCount: Int { cart.totalCount }
     public var totalPrice: Double { cart.totalPrice }
@@ -90,11 +91,11 @@ public final class CheckoutViewModel {
     public var isPaying = false
     public var placedOrder: Order?
 
-    public let cart: CartManager
+    public let cart: CartServiceImpl
     private let orderRepository: OrderRepository
 
-    public init(cart: CartManager = .shared, orderRepository: OrderRepository = .shared) {
-        self.cart = cart
+    public init(cart: CartServiceImpl? = nil, orderRepository: OrderRepository = .shared) {
+        self.cart = cart ?? CartServiceImpl.shared
         self.orderRepository = orderRepository
     }
 

@@ -16,6 +16,13 @@
     "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.swiftdeps",
     "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderModule.dia"
   },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/CartServiceImpl.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartServiceImpl.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartServiceImpl.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartServiceImpl~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartServiceImpl.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/CartServiceImpl.dia"
+  },
   "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/Sources/Repositories/OrderRepository.swift": {
     "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.d",
     "object": "/Users/appple/Documents/Demo/iOS/Navigation/OrderModule/.build/arm64-apple-macosx/debug/OrderModule.build/OrderRepository.swift.o",

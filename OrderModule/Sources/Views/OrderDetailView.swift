@@ -1,5 +1,6 @@
 import SwiftUI
 import AppBase
+import ProductContracts
 
 /// 订单详情视图（支付/取消/状态推进）
 public struct OrderDetailView: View {
@@ -88,7 +89,7 @@ public struct OrderDetailView: View {
         case .delivered:
             Section("操作") {
                 Button("再次购买") {
-                    navigator.navigate(to: "product/list")
+                    navigator.navigate(to: ProductLinks.list)
                 }
             }
         case .cancelled:

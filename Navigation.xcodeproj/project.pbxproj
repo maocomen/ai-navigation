@@ -203,6 +203,9 @@
 				AA01B023049C926009BEDC1 /* XCLocalSwiftPackageReference "UserModule" */,
 				BB02C033049C926009BEDC1 /* XCLocalSwiftPackageReference "ProductModule" */,
 				CC03D043049C926009BEDC1 /* XCLocalSwiftPackageReference "OrderModule" */,
+				DD04E056049C926009BEDC3 /* XCLocalSwiftPackageReference "OrderContracts" */,
+				DD04E056049C926009BEDC4 /* XCLocalSwiftPackageReference "ProductContracts" */,
+				DD04E056049C926009BEDC5 /* XCLocalSwiftPackageReference "UserContracts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E2D5814F30431C6000938869 /* Products */;
@@ -585,6 +588,18 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = OrderModule;
 		};
+		DD04E056049C926009BEDC3 /* XCLocalSwiftPackageReference "OrderContracts" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = OrderContracts;
+		};
+		DD04E056049C926009BEDC4 /* XCLocalSwiftPackageReference "ProductContracts" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ProductContracts;
+		};
+		DD04E056049C926009BEDC5 /* XCLocalSwiftPackageReference "UserContracts" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = UserContracts;
+		};
 		E201BAA13049C926009BEDC1 /* XCLocalSwiftPackageReference "AppBase" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = AppBase;
@@ -607,6 +622,18 @@
 		E201BAA23049C926009BEDC1 /* AppBase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppBase;
+		};
+		DD04E057049C926009BEDC3 /* OrderContracts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OrderContracts;
+		};
+		DD04E057049C926009BEDC4 /* ProductContracts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProductContracts;
+		};
+		DD04E057049C926009BEDC5 /* UserContracts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserContracts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

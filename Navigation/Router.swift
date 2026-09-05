@@ -1,5 +1,8 @@
 import SwiftUI
 import AppBase
+import UserModule
+import ProductModule
+import OrderModule
 
 @Observable
 @MainActor
@@ -118,6 +121,32 @@ final class Router: Navigator {
         }
     }
 
+    /// 通过 URL 跳转（深度链接入口）
+    /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
+    @discardableResult
+    func navigate(url: URL) -> Bool {
+        guard let routeURL = RouteURL(url: url) else { return false }
+        return navigateCore(to: routeURL.path, parameters: routeURL.parameters)
+    }
+
+    /// 通过 URL 字符串跳转
+    /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
+    @discardableResult
+    func navigate(urlString: String) -> Bool {
+        guard let routeURL = RouteURL(string: urlString) else { return false }
+        return navigateCore(to: routeURL.path, parameters: routeURL.parameters)
+    }
+
+    /// 核心跳转：路径 + 参数（参数以 String 为值，交由工厂二次解析类型）
+    @discardableResult
+    private func navigateCore(to path: String, parameters: [String: String]) -> Bool {
+        guard let route = registry.resolveRoute(for: path, parameters: parameters) else {
+            return false
+        }
+        push(route)
+        return true
+    }
+
     // MARK: - 栈操作（作用于当前活跃 Tab）
 
     func replaceRoot(_ route: any RouteType) {
@@ -133,13 +162,13 @@ final class Router: Navigator {
 
     // MARK: - 便捷方法
 
-    func goToLogin() { navigate(to: "user/login") }
-    func goToProfile(userID: String = "user123") { navigate(to: "user/profile", parameters: ["userID": userID]) }
-    func goToProductList(category: String = "全部") { navigate(to: "product/list", parameters: ["category": category]) }
-    func goToProductDetail(productID: String) { navigate(to: "product/detail", parameters: ["productID": productID]) }
-    func goToCart() { navigate(to: "order/cart") }
-    func goToOrderList() { navigate(to: "order/list") }
-    func goToOrderDetail(orderID: String) { navigate(to: "order/detail", parameters: ["orderID": orderID]) }
+    func goToLogin() { navigate(UserRoutes.Login.self) }
+    func goToProfile(userID: String = "user123") { navigate(UserRoutes.Profile.self, parameters: ["userID": userID]) }
+    func goToProductList(category: String = "全部") { navigate(ProductRoutes.List.self, parameters: ["category": category]) }
+    func goToProductDetail(productID: String) { navigate(ProductRoutes.Detail.self, parameters: ["productID": productID]) }
+    func goToCart() { navigate(OrderRoutes.Cart.self) }
+    func goToOrderList() { navigate(OrderRoutes.List.self) }
+    func goToOrderDetail(orderID: String) { navigate(OrderRoutes.Detail.self, parameters: ["orderID": orderID]) }
 
     func clearHistory() {
         history.removeAll()

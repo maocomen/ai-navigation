@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/primary.swiftdeps"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/Sources/UserContracts.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/UserContracts.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/UserContracts.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/UserContracts~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/UserContracts.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/UserContracts/.build/arm64-apple-macosx/debug/UserContracts.build/UserContracts.dia"
+  }
+}

@@ -65,19 +65,18 @@ struct HomeView: View {
             Label("深度链接 (Deep Link)", systemImage: "link")
                 .font(.headline)
 
-            Text("输入路由路径，模拟 URL Scheme / Push Notification 跳转")
+            Text("输入路由路径或 URL，如 user/login 或 navigate://user/profile?userID=u42")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             HStack {
-                TextField("输入路由路径，如 user/login", text: $deepLinkPath)
+                TextField("如 user/login 或 navigate://user/profile?userID=u42", text: $deepLinkPath)
                     .textFieldStyle(.roundedBorder)
                     .font(.caption)
                     .autocapitalization(.none)
 
                 Button("跳转") {
-                    if registry.containsRoute(deepLinkPath) {
-                        router.navigate(to: deepLinkPath)
+                    if router.navigate(urlString: deepLinkPath) {
                         deepLinkResult = "✅ 已跳转到: \(deepLinkPath)"
                     } else {
                         deepLinkResult = "❌ 未找到路由: \(deepLinkPath)"
@@ -92,12 +91,12 @@ struct HomeView: View {
             // 预设深度链接
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    DeepLinkChip(title: "登录", path: "user/login") { deepLinkPath = $0 }
-                    DeepLinkChip(title: "注册", path: "user/register") { deepLinkPath = $0 }
-                    DeepLinkChip(title: "个人中心", path: "user/profile") { deepLinkPath = $0 }
-                    DeepLinkChip(title: "商品列表", path: "product/list") { deepLinkPath = $0 }
-                    DeepLinkChip(title: "购物车", path: "order/cart") { deepLinkPath = $0 }
-                    DeepLinkChip(title: "订单列表", path: "order/list") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "登录", path: UserRoutes.Login.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "注册", path: UserRoutes.Register.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "个人中心", path: UserRoutes.Profile.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "商品列表", path: ProductRoutes.List.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "购物车", path: OrderRoutes.Cart.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "订单列表", path: OrderRoutes.List.path) { deepLinkPath = $0 }
                 }
             }
         }
@@ -105,8 +104,6 @@ struct HomeView: View {
         .background(Color(.systemGray6))
         .cornerRadius(12)
     }
-
-    private var registry: ModuleRegistry { ModuleRegistry.shared }
 
     // MARK: - 模块入口
 
@@ -118,19 +115,19 @@ struct HomeView: View {
             ModuleCard(
                 icon: "person.2.fill", color: .blue,
                 title: "UserModule", routeCount: 3,
-                routes: ["user/login", "user/register", "user/profile"]
+                routes: [UserRoutes.Login.path, UserRoutes.Register.path, UserRoutes.Profile.path]
             )
 
             ModuleCard(
                 icon: "bag.fill", color: .green,
                 title: "ProductModule", routeCount: 2,
-                routes: ["product/list", "product/detail"]
+                routes: [ProductRoutes.List.path, ProductRoutes.Detail.path]
             )
 
             ModuleCard(
                 icon: "shippingbox.fill", color: .orange,
                 title: "OrderModule", routeCount: 3,
-                routes: ["order/cart", "order/list", "order/detail"]
+                routes: [OrderRoutes.Cart.path, OrderRoutes.List.path, OrderRoutes.Detail.path]
             )
         }
         .padding()

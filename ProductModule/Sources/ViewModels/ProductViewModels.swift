@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import AppBase
+import OrderContracts
 
 // MARK: - 商品列表 ViewModel（含搜索/筛选/收藏）
 
@@ -60,11 +61,11 @@ public final class ProductDetailViewModel {
 
     public let product: Product
     private let repository: ProductRepository
-    private let cart: CartManager
+    private let cart: CartService
 
-    public init(productID: String, repository: ProductRepository = .shared, cart: CartManager = .shared) {
+    public init(productID: String, repository: ProductRepository = .shared, cart: CartService? = nil) {
         self.repository = repository
-        self.cart = cart
+        self.cart = cart ?? ServiceContainer.shared.resolve(CartService.self) ?? EmptyCartService()
         self.product = repository.product(id: productID)
             ?? Product(id: productID, name: "Unknown", price: 0, category: "", icon: "questionmark")
     }

@@ -1,12 +1,13 @@
 import SwiftUI
 import AppBase
+import UserContracts
 
 // MARK: - 路由定义
 
 public enum UserRoutes {
 
     public struct Login: RouteType {
-        public static var path: String { "user/login" }
+        public static var path: String { UserLinks.login }
         public init() {}
         public static func == (lhs: Login, rhs: Login) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("login") }
@@ -14,7 +15,7 @@ public enum UserRoutes {
     }
 
     public struct Register: RouteType {
-        public static var path: String { "user/register" }
+        public static var path: String { UserLinks.register }
         public init() {}
         public static func == (lhs: Register, rhs: Register) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("register") }
@@ -22,7 +23,7 @@ public enum UserRoutes {
     }
 
     public struct Profile: RouteType {
-        public static var path: String { "user/profile" }
+        public static var path: String { UserLinks.profile }
         public let userID: String
         public init(userID: String) { self.userID = userID }
         public static func == (lhs: Profile, rhs: Profile) -> Bool { lhs.userID == rhs.userID }
@@ -31,7 +32,7 @@ public enum UserRoutes {
     }
 
     public struct Settings: RouteType {
-        public static var path: String { "user/settings" }
+        public static var path: String { UserLinks.settings }
         public init() {}
         public static func == (lhs: Settings, rhs: Settings) -> Bool { true }
         public func hash(into hasher: inout Hasher) { hasher.combine("settings") }
@@ -50,7 +51,7 @@ public final class UserModule: ModuleProtocol {
         registry.addRoute(UserRoutes.Login())
         registry.addRoute(UserRoutes.Register())
         registry.addRoute(UserRoutes.Settings())
-        registry.addRouteFactory("user/profile") { params in
+        registry.addRouteFactory(UserRoutes.Profile.self) { params in
             let userID = params["userID"] as? String ?? "user123"
             return UserRoutes.Profile(userID: userID)
         }

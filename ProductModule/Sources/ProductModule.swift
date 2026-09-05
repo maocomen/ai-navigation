@@ -1,12 +1,13 @@
 import SwiftUI
 import AppBase
+import ProductContracts
 
 // MARK: - 路由定义
 
 public enum ProductRoutes {
 
     public struct List: RouteType {
-        public static var path: String { "product/list" }
+        public static var path: String { ProductLinks.list }
         public let category: String
         public init(category: String) { self.category = category }
         public static func == (lhs: List, rhs: List) -> Bool { lhs.category == rhs.category }
@@ -15,7 +16,7 @@ public enum ProductRoutes {
     }
 
     public struct Detail: RouteType {
-        public static var path: String { "product/detail" }
+        public static var path: String { ProductLinks.detail }
         public let productID: String
         public init(productID: String) { self.productID = productID }
         public static func == (lhs: Detail, rhs: Detail) -> Bool { lhs.productID == rhs.productID }
@@ -32,11 +33,11 @@ public final class ProductModule: ModuleProtocol {
     public init() {}
 
     public func registerRoutes(in registry: ModuleRegistry) {
-        registry.addRouteFactory("product/list") { params in
+        registry.addRouteFactory(ProductRoutes.List.self) { params in
             let category = params["category"] as? String ?? "全部"
             return ProductRoutes.List(category: category)
         }
-        registry.addRouteFactory("product/detail") { params in
+        registry.addRouteFactory(ProductRoutes.Detail.self) { params in
             guard let productID = params["productID"] as? String else { return nil }
             return ProductRoutes.Detail(productID: productID)
         }

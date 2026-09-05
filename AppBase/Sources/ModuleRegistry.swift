@@ -38,10 +38,18 @@ public final class ModuleRegistry: @unchecked Sendable {
         routeInstances[T.path] = route
     }
 
-    /// 注册带参路由工厂
+    /// 注册带参路由工厂（按路径字符串）
     /// 通过字符串路由 + 参数构建具体路由实例
     public func addRouteFactory(_ path: String, factory: @escaping RouteFactory) {
         routeFactories[path] = factory
+    }
+
+    /// 注册带参路由工厂（按路由类型，path 自动取自 `T.path`，避免硬编码）
+    public func addRouteFactory<T: RouteType>(
+        _ type: T.Type,
+        factory: @escaping RouteFactory
+    ) {
+        routeFactories[T.path] = factory
     }
 
     /// 判断路由是否存在

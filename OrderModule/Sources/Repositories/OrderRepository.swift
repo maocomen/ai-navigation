@@ -1,5 +1,6 @@
 import Foundation
 import AppBase
+import OrderContracts
 
 /// 订单仓库 - 内存态订单数据，负责下单、支付、状态流转
 /// 未来可替换为网络 / 数据库实现
@@ -31,7 +32,8 @@ public final class OrderRepository: @unchecked Sendable {
 
     /// 将购物车内容创建为订单，成功返回订单，随后清空购物车
     @discardableResult
-    public func placeOrder(cart: CartManager) -> Order? {
+    @MainActor
+    public func placeOrder(cart: CartService) -> Order? {
         lock.lock(); defer { lock.unlock() }
         guard !cart.items.isEmpty else { return nil }
         let items = cart.items.map {

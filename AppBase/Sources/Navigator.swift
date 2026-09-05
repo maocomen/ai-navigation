@@ -11,6 +11,13 @@ public protocol Navigator: AnyObject {
     var count: Int { get }
 }
 
+public extension Navigator {
+    /// 按路由类型跳转（path 自动取自 `T.path`，避免裸字符串）
+    func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) {
+        navigate(to: T.path, parameters: parameters)
+    }
+}
+
 // MARK: - Environment 支持
 
 private struct NavigatorKey: EnvironmentKey {

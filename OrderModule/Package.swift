@@ -15,12 +15,14 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../AppBase")
+        .package(path: "../AppBase"),
+        .package(path: "../OrderContracts"),
+        .package(path: "../ProductContracts")
     ],
     targets: [
         .target(
             name: "OrderModule",
-            dependencies: ["AppBase"]
+            dependencies: ["AppBase", "OrderContracts", "ProductContracts"]
         )
     ]
 )

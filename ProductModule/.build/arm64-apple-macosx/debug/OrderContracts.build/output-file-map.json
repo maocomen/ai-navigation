@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/primary.swiftdeps"
+  },
+  "/Users/appple/Documents/Demo/iOS/Navigation/OrderContracts/Sources/OrderContracts.swift": {
+    "dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/OrderContracts.d",
+    "object": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/OrderContracts.swift.o",
+    "swiftmodule": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/OrderContracts~partial.swiftmodule",
+    "swift-dependencies": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/OrderContracts.swiftdeps",
+    "diagnostics": "/Users/appple/Documents/Demo/iOS/Navigation/ProductModule/.build/arm64-apple-macosx/debug/OrderContracts.build/OrderContracts.dia"
+  }
+}

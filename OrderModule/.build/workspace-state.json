@@ -17,6 +17,34 @@
           "path" : "/Users/appple/Documents/Demo/iOS/Navigation/AppBase"
         },
         "subpath" : "appbase"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "ordercontracts",
+          "kind" : "fileSystem",
+          "location" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderContracts",
+          "name" : "OrderContracts"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/appple/Documents/Demo/iOS/Navigation/OrderContracts"
+        },
+        "subpath" : "ordercontracts"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "productcontracts",
+          "kind" : "fileSystem",
+          "location" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductContracts",
+          "name" : "ProductContracts"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/appple/Documents/Demo/iOS/Navigation/ProductContracts"
+        },
+        "subpath" : "productcontracts"
       }
     ],
     "prebuilts" : [

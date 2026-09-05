@@ -1,5 +1,7 @@
 import SwiftUI
 import AppBase
+import OrderContracts
+import ProductContracts
 
 /// 购物车视图
 public struct CartView: View {
@@ -30,7 +32,7 @@ public struct CartView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Button("浏览商品") {
-                navigator.navigate(to: "product/list")
+                navigator.navigate(to: ProductLinks.list)
             }
             .buttonStyle(.borderedProminent)
         }

@@ -1,5 +1,6 @@
 import SwiftUI
 import AppBase
+import OrderContracts
 
 /// 商品详情视图（收藏 + 数量选择 + 加购）
 public struct ProductDetailView: View {
@@ -33,7 +34,7 @@ public struct ProductDetailView: View {
             addToCartBar
         }
         .alert("已加入购物车", isPresented: $showAddedAlert) {
-            Button("查看购物车") { navigator.navigate(to: "order/cart") }
+            Button("查看购物车") { navigator.navigate(to: OrderLinks.cart) }
             Button("继续购物", role: .cancel) {}
         } message: {
             Text("\(viewModel.product.name) x\(viewModel.quantity)")
