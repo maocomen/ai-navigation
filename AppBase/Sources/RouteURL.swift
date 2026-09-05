@@ -35,18 +35,41 @@ public struct RouteURL: Sendable {
 
     /// 从 URL 字符串解析
     /// - 不完整（缺 scheme）时自动补全为 `navigate://`
+    /// - 路径格式：`module/action`（如 `user/login`）或 `navigate://module/action?key=value`
     public init?(string: String) {
         var text = string.trimmingCharacters(in: .whitespacesAndNewlines)
         if text.isEmpty { return nil }
 
-        // 补全 scheme
-        if !text.contains("://") {
+        if text.contains("://") {
+            guard let url = URL(string: text),
+                  let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+                return nil
+            }
+            var parameters: [String: String] = [:]
+            for item in components.queryItems ?? [] {
+                parameters[item.name] = item.value ?? ""
+            }
+            let path = String(components.path.drop(while: { $0 == "/" }))
+            self.init(parsed: Parsed(path: path, parameters: parameters))
+        } else {
             if text.hasPrefix("/") { text.removeFirst() }
-            text = "\(Self.defaultScheme)://\(text)"
+            let parts = text.split(separator: "?", maxSplits: 1)
+            let pathPart = String(parts[0])
+            var parameters: [String: String] = [:]
+            if parts.count > 1 {
+                for item in parts[1].split(separator: "&") {
+                    let kv = item.split(separator: "=", maxSplits: 1)
+                    if kv.count == 2 {
+                        parameters[String(kv[0])] = String(kv[1])
+                    }
+                }
+            }
+            self.init(parsed: Parsed(path: pathPart, parameters: parameters))
         }
+    }
 
-        guard let url = URL(string: text) else { return nil }
-        self.init(url: url)
+    private init(parsed: Parsed) {
+        self.parsed = parsed
     }
 
     /// 从 `URLComponents` 数据解析
