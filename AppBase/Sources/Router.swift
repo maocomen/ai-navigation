@@ -7,7 +7,7 @@ public protocol RouterProtocol: AnyObject {
     func popToRoot()
     func replace(_ route: any RouteType)
     func replaceRoot(_ route: any RouteType)
-    func navigate(to pathString: String)
+    func navigate(to pathString: String) -> Bool
     @discardableResult func navigate(urlString: String) -> Bool
     @discardableResult func navigate(url: URL) -> Bool
     var count: Int { get }
@@ -72,31 +72,43 @@ public final class Router<Tab: Hashable>: RouterProtocol {
     // MARK: - 导航操作
 
     public func push(_ route: any RouteType) {
-        var p = paths[activeTab] ?? NavigationPath()
+        push(route, to: activeTab)
+    }
+
+    public func push(_ route: any RouteType, to tab: Tab) {
+        var p = paths[tab] ?? NavigationPath()
         p.append(RouteBox(route))
-        setPath(p, for: activeTab)
-        pathMirrors[activeTab, default: []].append(route._path)
+        setPath(p, for: tab)
+        pathMirrors[tab, default: []].append(route._path)
         recordHistory(route._path, action: .push)
+        if tab != activeTab { activeTab = tab }
     }
 
     public func pop() {
         var p = paths[activeTab] ?? NavigationPath()
         guard !p.isEmpty else { return }
+        let removed = stackPaths(for: activeTab).last ?? ""
         p.removeLast()
         setPath(p, for: activeTab)
+        recordHistory(removed, action: .pop)
     }
 
     public func pop(to targetCount: Int) {
         var p = paths[activeTab] ?? NavigationPath()
         guard targetCount >= 0 && targetCount < p.count else { return }
-        p.removeLast(p.count - targetCount)
+        let removedCount = p.count - targetCount
+        p.removeLast(removedCount)
         setPath(p, for: activeTab)
+        recordHistory("pop \(removedCount) levels", action: .pop)
     }
 
     public func popToRoot() {
         var p = paths[activeTab] ?? NavigationPath()
+        guard !p.isEmpty else { return }
+        let count = p.count
         p.removeLast(p.count)
         setPath(p, for: activeTab)
+        recordHistory("popToRoot (\(count) levels)", action: .pop)
     }
 
     public func replace(_ route: any RouteType) {
@@ -122,17 +134,34 @@ public final class Router<Tab: Hashable>: RouterProtocol {
 
     // MARK: - URL 导航
 
-    public func navigate(to pathString: String) {
+    @discardableResult
+    public func navigate(to pathString: String) -> Bool {
         navigate(to: pathString, parameters: [:])
     }
 
-    public func navigate(to pathString: String, parameters: RouteParameters) {
+    @discardableResult
+    public func navigate(to pathString: String, parameters: RouteParameters) -> Bool {
         let stringParams = parameters.compactMapValues { $0 as? String }
-        navigateCore(to: pathString, parameters: stringParams, caller: .app)
+        return navigateCore(to: pathString, parameters: stringParams, caller: .app)
     }
 
-    public func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) {
+    @discardableResult
+    public func navigate(to pathString: String, in tab: Tab) -> Bool {
+        let savedTab = activeTab
+        activeTab = tab
+        let result = navigate(to: pathString)
+        if !result { activeTab = savedTab }
+        return result
+    }
+
+    @discardableResult
+    public func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) -> Bool {
         navigate(to: T.path, parameters: parameters)
+    }
+
+    @discardableResult
+    public func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:], in tab: Tab) -> Bool {
+        navigate(to: T.path, in: tab)
     }
 
     @discardableResult
@@ -190,7 +219,7 @@ public final class AnyRouter {
     private let _popToRoot: () -> Void
     private let _replace: (any RouteType) -> Void
     private let _replaceRoot: (any RouteType) -> Void
-    private let _navigateString: (String) -> Void
+    private let _navigateString: (String) -> Bool
     private let _navigateURL: (URL) -> Bool
     private let _navigateURLString: (String) -> Bool
     private let _count: () -> Int
@@ -218,7 +247,7 @@ public final class AnyRouter {
     public func popToRoot() { _popToRoot() }
     public func replace(_ route: any RouteType) { _replace(route) }
     public func replaceRoot(_ route: any RouteType) { _replaceRoot(route) }
-    public func navigate(to pathString: String) { _navigateString(pathString) }
+    @discardableResult public func navigate(to pathString: String) -> Bool { _navigateString(pathString) }
     @discardableResult public func navigate(url: URL) -> Bool { _navigateURL(url) }
     @discardableResult public func navigate(urlString: String) -> Bool { _navigateURLString(urlString) }
     public var count: Int { _count() }

@@ -35,12 +35,17 @@ public final class ModuleRegistry: @unchecked Sendable {
 
     /// 添加无参路由
     public func addRoute<T: RouteType>(_ route: T) {
+        if routeInstances[T.path] != nil {
+            print("[ModuleRegistry] ⚠️ Route conflict: '\(T.path)' already registered, overriding")
+        }
         routeInstances[T.path] = route
     }
 
     /// 注册带参路由工厂（按路径字符串）
-    /// 通过字符串路由 + 参数构建具体路由实例
     public func addRouteFactory(_ path: String, factory: @escaping RouteFactory) {
+        if routeFactories[path] != nil || routeInstances[path] != nil {
+            print("[ModuleRegistry] ⚠️ Route factory conflict: '\(path)' already registered, overriding")
+        }
         routeFactories[path] = factory
     }
 
@@ -49,6 +54,9 @@ public final class ModuleRegistry: @unchecked Sendable {
         _ type: T.Type,
         factory: @escaping RouteFactory
     ) {
+        if routeFactories[T.path] != nil || routeInstances[T.path] != nil {
+            print("[ModuleRegistry] ⚠️ Route factory conflict: '\(T.path)' already registered, overriding")
+        }
         routeFactories[T.path] = factory
     }
 

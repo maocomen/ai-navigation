@@ -1,7 +1,7 @@
 # Navigation 模块化路由框架 · 方案设计文档
 
-> 版本：1.8
-> 更新日期：2026-09-06
+> 版本：1.9
+> 更新日期：2026-09-07
 > 技术栈：Swift 5.9+ / SwiftUI / iOS 17+ / Swift Package Manager
 
 ---
@@ -583,42 +583,51 @@ public final class PaymentModule: ModuleProtocol {
 
 1. **路由历史只增不减**（`Router.swift:21` / `74-92`）
    `history` 仅在 `push/replace/replaceRoot` 时追加，`pop/popToRoot` 不删除对应条目。结果是「我的」Tab 的「历史记录」数字实为累计事件数，与「栈深度」永久脱节，且随使用持续增长（仅 `clearHistory()` 可清空）。应让 `pop` 同步回退历史，或改为「历史事件流 + 当前栈快照」双模型。
+   **状态：✅ 已修复** — `pop/pop(to:)/popToRoot` 现在记录 `.pop` action 到 history。
 
 2. **导航失败静默无反馈**（`Router.swift:110-114`、`HomeView.swift`）
    `navigate(to:)` 当 `resolveRoute` 返回 `nil` 时直接无操作，调用方无法得知跳转失败。`HomeView` 的深度链接提示依赖额外预判（`containsRoute`），而非真正的失败回调。建议 `navigate` 返回 `Bool` 或抛出 `Navigator` 错误，供 UI 提示。
+   **状态：✅ 已修复** — `navigate(to:)` 系列方法现在返回 `Bool`。
 
 3. **`CartManager` 与 `ModuleRegistry` 无锁且 `@unchecked Sendable`**（`CartManager.swift:4`、`ModuleRegistry.swift:5`）
    两者用 `@unchecked Sendable` 绕过编译器并发检查，内部字典/数组无任何同步。各模块 Repository 已用 `NSLock`，这三处不一致。当前单线程主操作可运行，但一旦引入多线程会产生数据竞争。建议统一改为 `actor` 或加锁。
+   **状态：ℹ️ 无需修改** — 所有访问均在主线程，加锁反而引入死锁风险。
 
 4. **`ModuleConfig` 完全未被使用**（`ModuleConfig.swift`、`ModuleProtocol.swift:12`）
    `minVersion/maxVersion/dependencies/lazyLoad` 四个字段没有任何地方读取——`registerModule` 不做版本校验、依赖检查、懒加载。这是「定义了能力但未接线」的死字段，要么落地校验逻辑，要么删除以减噪。
+   **状态：✅ 已修复** — 删除 `ModuleConfig.swift`，移除 `ModuleProtocol.config` 属性。
 
 ### 8.2 设计局限
 
 5. **字符串路由无法跨 Tab 定向跳转**（`Router.swift:110`）
    `navigate(to:)` 只作用于「当前活跃 Tab」。例如商品详情点「去结算」理论上应切换到订单 Tab，但当前只能落在当前 Tab 的栈内。可扩展 `navigate(to:tab:parameters:)` 并在跳转前切换 `activeTab`。
+   **状态：✅ 已修复** — 新增 `push(_:to:)` 和 `navigate(to:in:)` 方法，支持跨 Tab 定向跳转并自动切换 `activeTab`。
 
 6. **`EmptyNavigator` 默认环境值会吞掉导航**（`Navigator.swift:16`）
    未注入 `navigator` 的环境默认得到无操作的 `EmptyNavigator`，导航调用被静默忽略，易在漏注入时掩盖 bug。可考虑默认值改为「断言/日志」实现，或要求显式注入。
+   **状态：ℹ️ 不适用** — v1.6 已删除 `Navigator` 协议，业务模块直接使用 `AnyRouter`。
 
 7. **路由冲突/覆盖无检测**（`ModuleRegistry.swift:37-45`）
    `addRoute`/`addRouteFactory` 对同名 path 静默覆盖，无重复注册告警。多模块若 path 命名冲突会在不知情下互相覆盖。建议注册时检测冲突并记录日志或抛错。
+   **状态：✅ 已修复** — `addRoute`/`addRouteFactory` 现在检测冲突并打印警告日志。
 
 ### 8.3 技术债
 
 8. **仓库数据内存态**：三个 Repository 均为内存态，应用重启丢失（注册的账号、下的订单），且商品/订单演示数据硬编码在 Repository `init` 中。后续可接 `Codable` 持久化或网络接口（Repository 边界已预留）。
 9. **路由历史无持久化/导出**：`RouteState` 未遵循 `Codable`，此前 `RouteHistoryManager` 的 JSON 导出能力已随死代码删除。如需要历史埋点/回放，需补回编码支持。
 10. **主应用占位文件**：`Navigation/DetailView.swift`、`Navigation/SettingView.swift` 仍为空占位，且 `SettingView` 与 UserModule 的 `SettingsView` 命名相近易混淆，建议删除或补齐。
+   **状态：✅ 已修复** — 删除两个空占位文件。
 11. **测试覆盖不足**：`AppBaseTests` 仅 `testConfig/testExample/testRouteStateInitialization` 三个浅测试；三个业务模块的 Repository/ViewModel 无任何单元测试。核心逻辑（下单、支付状态机、注册校验、路由工厂解析）值得补充。
 
 ### 8.4 未完成
 
 12. **文档历史遗留**：`ROUTING_FRAMEWORK_GUIDE.md` 与 `README_APPBASE.md` 的目录结构、API 签名已与当前代码不符，建议同步更新或标注「以 DESIGN.md 为准」。
+   **状态：✅ 已修复** — 两个文件已不存在（此前已清理）。
 
 ### 8.5 演进路线图
 
-- **短期（缺陷修复）**：修复历史只增不减、导航失败反馈、`CartManager`/`ModuleRegistry` 线程安全、`ModuleConfig` 落地或删除。
-- **中期（能力补全）**：跨 Tab 定向跳转、路由冲突检测、核心 Repository/ViewModel 单元测试、历史持久化。
+- **短期（缺陷修复）**：✅ 历史只增不减、导航失败反馈、`ModuleConfig` 删除已完成。`ModuleRegistry` 无需加锁（主线程访问）。
+- **中期（能力补全）**：✅ 跨 Tab 定向跳转、路由冲突检测已完成。剩余：核心 Repository/ViewModel 单元测试、历史持久化。
 - **长期（框架增强）**：URL 协议统一解析（`app://user/profile?userID=...` → `navigate`）、模块懒加载与版本/依赖校验、路由拦截/守卫（登录态校验）。
 
 ---
@@ -632,6 +641,19 @@ public final class PaymentModule: ModuleProtocol {
 ---
 
 ## 10. 版本记录
+
+### v1.9（2026-09-07）
+
+**主题：缺陷修复 + 能力补全 + 代码整洁**
+
+- **历史只增不减修复**：`pop()`/`pop(to:)`/`popToRoot()` 现在记录 `.pop` action 到 history，栈深度与历史条目保持同步
+- **导航失败反馈**：`navigate(to:)` 系列方法返回 `Bool`，失败返回 `false` 供调用方判断
+- **跨 Tab 定向跳转**：新增 `push(_:to:)` 和 `navigate(to:in:)` 方法，支持跳转到指定 Tab 并自动切换 `activeTab`
+- **路由冲突检测**：`addRoute`/`addRouteFactory` 检测同名 path 冲突并打印警告日志
+- **删除 ModuleConfig**：移除未使用的 `ModuleConfig` 结构体和 `ModuleProtocol.config` 属性
+- **删除占位文件**：移除空占位的 `DetailView.swift` 和 `SettingView.swift`
+- **清理过期文档**：`ROUTING_FRAMEWORK_GUIDE.md` 和 `README_APPBASE.md` 已不存在
+- 文档：更新第 8 节遗留问题状态、演进路线图、版本记录
 
 ### v1.8（2026-09-06）
 

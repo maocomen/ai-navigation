@@ -8,9 +8,6 @@ public protocol ModuleProtocol: Sendable {
     /// 模块名称
     var moduleName: String { get }
     
-    /// 模块配置
-    var config: ModuleConfig { get }
-    
     /// 注册路由到注册中心
     func registerRoutes(in registry: ModuleRegistry)
     
@@ -20,9 +17,5 @@ public protocol ModuleProtocol: Sendable {
 
 /// 扩展：模块默认实现
 public extension ModuleProtocol {
-    var config: ModuleConfig {
-        ModuleConfig()
-    }
-    
     func initializeResources() {}
 }
