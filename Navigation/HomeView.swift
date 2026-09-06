@@ -25,11 +25,8 @@ struct HomeView: View {
                 // 跨模块导航演示
                 crossModuleSection
 
-                // 栈控制
-                stackControlSection
-
-                // 路由历史
-                historySection
+                // 导航操作演示
+                operationSection
             }
             .padding()
         }
@@ -185,23 +182,14 @@ struct HomeView: View {
         .cornerRadius(12)
     }
 
-    // MARK: - 栈控制
+    // MARK: - 导航操作演示
 
-    private var stackControlSection: some View {
+    private var operationSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Label("导航栈控制", systemImage: "stack")
-                    .font(.headline)
-                Spacer()
-                Text("深度: \(router.count)")
-                    .font(.caption.bold())
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(8)
-            }
+            Label("导航操作演示", systemImage: "hand.tap")
+                .font(.headline)
 
-            Text("当前栈: \(router.stackDescription)")
+            Text("从首页发起导航，观察底部调试 HUD 的栈变化")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -212,79 +200,14 @@ struct HomeView: View {
                 StackButton(title: "Push 商品", icon: "arrow.down") {
                     router.push(ProductRoutes.List(category: "全部"))
                 }
-                StackButton(title: "Pop 返回", icon: "arrow.up") {
-                    router.pop()
-                }
-                StackButton(title: "Pop to Root", icon: "arrow.up.to.line") {
-                    router.popToRoot()
-                }
                 StackButton(title: "Replace Root", icon: "arrow.triangle.2.circlepath") {
                     router.replaceRoot(UserRoutes.Login())
                 }
-                StackButton(title: "清空历史", icon: "trash") {
-                    router.clearHistory()
-                }
             }
         }
         .padding()
         .background(Color(.systemGray6))
         .cornerRadius(12)
-    }
-
-    // MARK: - 路由历史
-
-    private var historySection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("路由历史 (\(router.historyEntries.count))", systemImage: "clock.arrow.circlepath")
-                .font(.headline)
-
-            if router.historyEntries.isEmpty {
-                Text("暂无导航历史")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            } else {
-                ForEach(router.historyEntries.suffix(8).enumerated(), id: \.offset) { _, entry in
-                    HStack {
-                        Image(systemName: actionIcon(entry.action))
-                            .font(.caption)
-                            .foregroundColor(actionColor(entry.action))
-                            .frame(width: 20)
-                        Text(entry.path)
-                            .font(.caption.monospaced())
-                        Spacer()
-                        Text(entry.action.rawValue)
-                            .font(.caption2)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(actionColor(entry.action).opacity(0.1))
-                            .cornerRadius(4)
-                    }
-                }
-            }
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
-    }
-
-    private func actionIcon(_ action: RouteAction) -> String {
-        switch action {
-        case .push: return "arrow.down"
-        case .pop: return "arrow.up"
-        case .replace: return "arrow.triangle.2.circlepath"
-        case .reset: return "arrow.clockwise"
-        }
-    }
-
-    private func actionColor(_ action: RouteAction) -> Color {
-        switch action {
-        case .push: return .blue
-        case .pop: return .orange
-        case .replace: return .purple
-        case .reset: return .red
-        }
     }
 
     /// 跳转成功提示文案

@@ -50,6 +50,9 @@ struct ContentView: View {
         .onChange(of: selectedTab) { _, newTab in
             router.activeTab = newTab
         }
+        .overlay(alignment: .bottom) {
+            RouterDebugHUD()
+        }
     }
 
     // 每个 Tab 绑定自己独立的导航栈，栈之间互不影响
@@ -119,15 +122,6 @@ private struct ProfileTabView: View {
                 } label: {
                     Label("购物车", systemImage: "cart")
                 }
-            }
-
-            Section("导航栈信息") {
-                LabeledContent("栈深度", value: "\(router.count)")
-                LabeledContent("历史记录", value: "\(router.historyEntries.count) 条")
-                Button("Pop 返回") { router.pop() }
-                    .disabled(router.count == 0)
-                Button("返回根页", role: .destructive) { router.popToRoot() }
-                    .disabled(router.count == 0)
             }
         }
         .navigationTitle("我的")

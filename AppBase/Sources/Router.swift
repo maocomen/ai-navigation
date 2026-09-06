@@ -27,6 +27,7 @@ public final class Router {
     public private(set) var profilePath = NavigationPath()
 
     private var history: [RouteState] = []
+    private var pathMirrors: [Tab: [String]] = [:]
     private let registry = ModuleRegistry.shared
 
     public nonisolated init() {}
@@ -55,6 +56,8 @@ public final class Router {
         }
     }
 
+    /// 系统手势返回（binding 回写）只会减少栈元素，按 count 差值同步镜像；
+    /// Router 主动 push/replace/replaceRoot 在各自方法内维护镜像内容
     private func setPath(_ newPath: NavigationPath, for tab: Tab) {
         switch tab {
         case .home: homePath = newPath
@@ -62,15 +65,25 @@ public final class Router {
         case .order: orderPath = newPath
         case .profile: profilePath = newPath
         }
+        let diff = (pathMirrors[tab] ?? []).count - newPath.count
+        if diff > 0 {
+            pathMirrors[tab]?.removeLast(diff)
+        }
     }
 
     // MARK: - 当前活跃栈信息
 
     public var count: Int { path(for: activeTab).count }
 
+    /// 指定 Tab 的栈路径镜像（自底向上的路由路径序列）
+    public func stackPaths(for tab: Tab) -> [String] {
+        pathMirrors[tab] ?? []
+    }
+
     public var stackDescription: String {
-        guard count > 0 else { return "(空)" }
-        return (0..<count).map { "[$\($0)]" }.joined(separator: " → ")
+        let paths = stackPaths(for: activeTab)
+        guard !paths.isEmpty else { return "(空)" }
+        return paths.joined(separator: " → ")
     }
 
     public var historyEntries: [RouteState] { history }
@@ -81,6 +94,7 @@ public final class Router {
         var p = path(for: activeTab)
         p.append(RouteBox(route))
         setPath(p, for: activeTab)
+        pathMirrors[activeTab, default: []].append(route._path)
         recordHistory(route._path, action: .push)
     }
 
@@ -113,6 +127,10 @@ public final class Router {
         p.removeLast()
         p.append(RouteBox(route))
         setPath(p, for: activeTab)
+        if !(pathMirrors[activeTab] ?? []).isEmpty {
+            pathMirrors[activeTab]?.removeLast()
+        }
+        pathMirrors[activeTab, default: []].append(route._path)
         recordHistory(route._path, action: .replace)
     }
 
@@ -194,6 +212,7 @@ public final class Router {
         var p = NavigationPath()
         p.append(RouteBox(route))
         setPath(p, for: activeTab)
+        pathMirrors[activeTab] = [route._path]
         recordHistory(route._path, action: .reset)
     }
 
