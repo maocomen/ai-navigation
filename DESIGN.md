@@ -1,7 +1,7 @@
 # Navigation 模块化路由框架 · 方案设计文档
 
-> 版本：1.6
-> 更新日期：2026-09-05
+> 版本：1.7
+> 更新日期：2026-09-06
 > 技术栈：Swift 5.9+ / SwiftUI / iOS 17+ / Swift Package Manager
 
 ---
@@ -137,7 +137,7 @@ Navigation/
 | `Router` | AppBase/Router.swift | 运行时导航引擎（具体类），持有各 Tab 独立路由栈，通过 `@Environment(Router.self)` 注入 |
 | `ModuleRegistry` | AppBase/ModuleRegistry.swift | 模块与路由的注册中心，支持实例路由与工厂路由，注册时初始化模块资源 |
 | `ModuleProtocol` | AppBase/ModuleProtocol.swift | 模块协议，声明 `registerRoutes` 与 `initializeResources` |
-| `RouteURL` | AppBase/RouteURL.swift | 路由 URL 解析器（scheme + path + query） |
+| `RouteURL` | AppBase/RouteURL.swift | 路由 URL 解析器（scheme + caller host + path + query） |
 | `ServiceContainer` | AppBase/ServiceContainer.swift | 依赖注入容器，跨模块服务按协议注册/解析 |
 | `CartService` | OrderContracts/OrderContracts.swift | 购物车服务协议（订单域契约包，跨模块共享） |
 | `OrderLinks` | OrderContracts/OrderContracts.swift | 订单域链接常量（单一真相源） |
@@ -194,7 +194,7 @@ router.navigate(OrderRoutes.Cart.self)   // Router 直接支持按类型跳转
 
 ```swift
 router.navigate(to: "order/cart")
-router.navigate(urlString: "navigate://user/profile?userID=u42")
+router.navigate(urlString: "navigate://app.navigation.com/user/profile?userID=u42")
 ```
 
 ### 3.4 参数化路由解析（路由工厂）
@@ -220,27 +220,39 @@ registry.addRoute(OrderRoutes.Cart())
 统一 URL 格式：
 
 ```
-<scheme>://<module>/<action>?key1=value1&key2=value2
+<scheme>://<caller-host>/<module>/<action>?key1=value1&key2=value2
 ```
 
 - **scheme**：自定义固定 scheme（当前 `navigate`），供 App 内/外深度链接
+- **host**：类域名形式的 caller 标识，表示调用来源。内部调用默认 `app.navigation.com`；外部调用按来源区分：`external.navigation.com`（外部 App）、`web.navigation.com`（Web / Universal Link）、`push.navigation.com`（推送通知）、`widget.navigation.com`（小组件）、`siri.navigation.com`（Siri / 快捷指令）。host 必须在 `RouteURL.Caller` 白名单（`allHosts`）内，缺失或不在白名单时解析失败
 - **path**：与 `RouteType.path` 对齐的「模块/动作」，如 `user/profile`
 - **query**：路由参数，统一按 `[String: String]` 解析，类型由路由工厂二次转换
 
-示例：
+> **纯路径兼容**：不带 scheme 的纯路径 `module/action`（如 `user/profile`、`user/profile?userID=u42`）默认 `caller = app`，等价于 `navigate://app.navigation.com/...`。带 scheme 的 URL 必须显式携带合法 caller host。
+
+示例（内部调用，caller = app）：
 
 ```
-navigate://user/login
-navigate://user/profile?userID=u42
-navigate://product/detail?productID=p3
-navigate://order/cart
-navigate://order/detail?orderID=order1
+navigate://app.navigation.com/user/login
+navigate://app.navigation.com/user/profile?userID=u42
+navigate://app.navigation.com/product/detail?productID=p3
+navigate://app.navigation.com/order/cart
+navigate://app.navigation.com/order/detail?orderID=order1
 ```
 
-入口：`RouteURL`（AppBase/RouteURL.swift）支持从 `URL` 或字符串解析（缺 scheme 自动补全）：
+外部来源示例（caller ≠ app）：
+
+```
+navigate://push.navigation.com/order/detail?orderID=order1
+navigate://widget.navigation.com/order/cart
+navigate://siri.navigation.com/user/login
+```
+
+入口：`RouteURL`（AppBase/RouteURL.swift）支持从 `URL` 或字符串解析。纯路径（无 scheme）默认 `caller = app`；带 scheme 的 URL 严格校验 scheme 与 caller host（均大小写不敏感），host 缺失或不在白名单时解析失败，`navigate(urlString:)` 返回 `false`：
 
 ```swift
-router.navigate(urlString: "navigate://user/profile?userID=u42")  // Bool 返回成败
+router.navigate(urlString: "navigate://app.navigation.com/user/profile?userID=u42")  // Bool 返回成败
+router.navigate(urlString: "user/profile?userID=u42")  // 纯路径，caller 默认 app
 router.navigate(url: someURL)
 ```
 
@@ -553,6 +565,16 @@ public final class PaymentModule: ModuleProtocol {
 
 ## 10. 版本记录
 
+### v1.7（2026-09-06）
+
+**主题：深度链接 URL 规范化（caller host）**
+
+- `RouteURL` 统一深度链接格式为 `navigate://<caller-host>/<module>/<action>?key=value`，host 为类域名形式的调用来源（caller）标识
+- 内部调用默认 `app.navigation.com`；外部调用按来源区分：`external.navigation.com`（外部 App）、`web.navigation.com`（Web / Universal Link）、`push.navigation.com`（推送通知）、`widget.navigation.com`（小组件）、`siri.navigation.com`（Siri / 快捷指令）
+- 纯路径 `module/action`（无 scheme）向后兼容，默认 `caller = app`
+- 带 scheme 的 URL 必须显式携带白名单（`RouteURL.Caller.allHosts`）内的 caller host，缺失或非法 host 解析失败（fail loud），旧格式 `navigate://user/login` 不再被支持
+- 文档：更新第 3.3 / 3.5 节 URL 示例与格式说明、核心类型表 `RouteURL` 职责
+
 ### v1.6（2026-09-05）
 
 **主题：Router 下沉到 AppBase + 删除 Navigator 协议**
@@ -604,7 +626,7 @@ public final class PaymentModule: ModuleProtocol {
 
 - 修复二级页面不展示：引入 `RouteBox` 统一 `NavigationPath` 元素类型，`navigationDestination(for: RouteBox.self)` 稳定匹配
 - TabBar 隐显提至 `NavigationStack` 层（`Router.isDetail` 驱动），推送转场与 tabBar 收起合并为同一动画
-- 新增 `RouteURL` 解析器，支持 `navigate://module/action?k=v` 格式；`Router` 新增 `navigate(url:)` / `navigate(urlString:)`（返回成败）
+- 新增 `RouteURL` 解析器与 `Router.navigate(url:)` / `navigate(urlString:)`（返回成败）；URL 格式自 v1.7 起规范为 `navigate://<caller-host>/module/action?k=v`
 - path 收敛：`RouteType.path` 为唯一权威源，`addRouteFactory(T.self)`、`navigate(T.self)` 消除硬编码；跨模块字符串保留为深度链接语义
 - 便捷方法 `goToXxx` 引用各模块 `T.path`；演示 UI 展示改用 `T.path`
 - 文档：扩充路由机制（URL 设计、path 维护策略、三种跳转方式）

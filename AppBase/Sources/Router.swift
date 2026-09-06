@@ -120,10 +120,13 @@ public final class Router {
         navigate(to: pathString, parameters: [:])
     }
 
+    /// 通过路径字符串 + 参数跳转（App 内调用，caller 视为 `.app`）
+    ///
+    /// `RouteParameters` 值为 `Any`，此处收窄为 `[String: String]` 以对齐 `navigateCore`，
+    /// 非 String 值会被过滤（现有调用方均传 String 值或空参数）。
     public func navigate(to pathString: String, parameters: RouteParameters) {
-        if let route = registry.resolveRoute(for: pathString, parameters: parameters) {
-            push(route)
-        }
+        let stringParameters = parameters.compactMapValues { $0 as? String }
+        navigateCore(to: pathString, parameters: stringParameters, caller: .app)
     }
 
     /// 按路由类型跳转，path 自动取自 `T.path`，避免裸字符串
@@ -133,23 +136,51 @@ public final class Router {
 
     /// 通过 URL 跳转（深度链接入口）
     /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
+    /// - 解析失败时打印错误原因到控制台
     @discardableResult
     public func navigate(url: URL) -> Bool {
-        guard let routeURL = RouteURL(url: url) else { return false }
-        return navigateCore(to: routeURL.path, parameters: routeURL.parameters)
+        navigate(parsed: RouteURL.parse(url.absoluteString))
     }
 
     /// 通过 URL 字符串跳转
     /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
+    /// - 解析失败时打印错误原因到控制台
     @discardableResult
     public func navigate(urlString: String) -> Bool {
-        guard let routeURL = RouteURL(string: urlString) else { return false }
-        return navigateCore(to: routeURL.path, parameters: routeURL.parameters)
+        navigate(parsed: RouteURL.parse(urlString))
     }
 
-    /// 核心跳转：路径 + 参数（参数以 String 为值，交由工厂二次解析类型）
+    /// 深度链接统一入口：解析成功携带 caller 走核心跳转，失败打印错误原因并返回 false
+    private func navigate(parsed: Result<RouteURL, RouteURLParseError>) -> Bool {
+        switch parsed {
+        case .success(let routeURL):
+            return navigateCore(
+                to: routeURL.path,
+                parameters: routeURL.parameters,
+                caller: routeURL.caller
+            )
+        case .failure(let error):
+            print("[Router] URL parse failed: \(error)")
+            return false
+        }
+    }
+
+    /// 核心跳转：路径 + 参数 + 调用来源（参数以 String 为值，交由工厂二次解析类型）
+    ///
+    /// caller 策略钩子（第一阶段仅打印日志，不改变实际导航行为）：
+    /// - `.external` / `.web`：外部来源，记录来源日志（后续可加安全校验/降级策略）
+    /// - `.push`：推送来源，记录日志（后续可加去重/落地页策略）
+    /// - `.app` / `.widget` / `.siri`：App 受信来源，直接跳转
     @discardableResult
-    private func navigateCore(to path: String, parameters: [String: String]) -> Bool {
+    private func navigateCore(to path: String, parameters: [String: String], caller: RouteURL.Caller) -> Bool {
+        switch caller {
+        case .external, .web:
+            print("[Router] external/web deep link: \(path) from \(caller.rawValue)")
+        case .push:
+            print("[Router] push deep link: \(path)")
+        case .app, .widget, .siri:
+            break
+        }
         guard let route = registry.resolveRoute(for: path, parameters: parameters) else {
             return false
         }

@@ -65,21 +65,22 @@ struct HomeView: View {
             Label("深度链接 (Deep Link)", systemImage: "link")
                 .font(.headline)
 
-            Text("输入路由路径或 URL，如 user/login 或 navigate://user/profile?userID=u42")
+            Text("输入路由路径或 URL，如 user/login 或 navigate://app.navigation.com/user/profile?userID=u42")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             HStack {
-                TextField("如 user/login 或 navigate://user/profile?userID=u42", text: $deepLinkPath)
+                TextField("如 user/login 或 navigate://app.navigation.com/user/profile?userID=u42", text: $deepLinkPath)
                     .textFieldStyle(.roundedBorder)
                     .font(.caption)
                     .autocapitalization(.none)
 
                 Button("跳转") {
-                    if router.navigate(urlString: deepLinkPath) {
-                        deepLinkResult = "✅ 已跳转到: \(deepLinkPath)"
+                    let input = deepLinkPath
+                    if router.navigate(urlString: input) {
+                        deepLinkResult = jumpSuccessMessage(for: input)
                     } else {
-                        deepLinkResult = "❌ 未找到路由: \(deepLinkPath)"
+                        deepLinkResult = "❌ 未找到路由: \(input)"
                     }
                     showDeepLinkAlert = true
                     deepLinkPath = ""
@@ -91,12 +92,16 @@ struct HomeView: View {
             // 预设深度链接
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    DeepLinkChip(title: "登录", path: UserRoutes.Login.path) { deepLinkPath = $0 }
-                    DeepLinkChip(title: "注册", path: UserRoutes.Register.path) { deepLinkPath = $0 }
-                    DeepLinkChip(title: "个人中心", path: UserRoutes.Profile.path) { deepLinkPath = $0 }
-                    DeepLinkChip(title: "商品列表", path: ProductRoutes.List.path) { deepLinkPath = $0 }
-                    DeepLinkChip(title: "购物车", path: OrderRoutes.Cart.path) { deepLinkPath = $0 }
-                    DeepLinkChip(title: "订单列表", path: OrderRoutes.List.path) { deepLinkPath = $0 }
+                    DeepLinkChip(title: "登录", path: "navigate://app.navigation.com/\(UserRoutes.Login.path)") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "注册", path: "navigate://app.navigation.com/\(UserRoutes.Register.path)") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "个人中心", path: "navigate://app.navigation.com/\(UserRoutes.Profile.path)") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "商品列表", path: "navigate://app.navigation.com/\(ProductRoutes.List.path)") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "购物车", path: "navigate://app.navigation.com/\(OrderRoutes.Cart.path)") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "订单列表", path: "navigate://app.navigation.com/\(OrderRoutes.List.path)") { deepLinkPath = $0 }
+
+                    DeepLinkChip(title: "外部-个人中心", path: "navigate://external.navigation.com/\(UserRoutes.Profile.path)?userID=u42") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "推送-订单", path: "navigate://push.navigation.com/\(OrderRoutes.Detail.path)?orderID=ORD-123") { deepLinkPath = $0 }
+                    DeepLinkChip(title: "Web-商品", path: "navigate://web.navigation.com/\(ProductRoutes.Detail.path)?productID=p3") { deepLinkPath = $0 }
                 }
             }
         }
@@ -280,6 +285,17 @@ struct HomeView: View {
         case .replace: return .purple
         case .reset: return .red
         }
+    }
+
+    /// 跳转成功提示文案
+    ///
+    /// `Router.navigate(urlString:)` 只返回 Bool，拿不到解析结果；
+    /// 这里用 `RouteURL.parse` 复现解析，展示 caller 与归一化 path（附原始输入）。
+    private func jumpSuccessMessage(for input: String) -> String {
+        guard case .success(let parsed) = RouteURL.parse(input) else {
+            return "✅ 已跳转到: \(input)"
+        }
+        return "✅ 已跳转到: [\(parsed.caller.rawValue)] \(parsed.path)\n（输入: \(input)）"
     }
 }
 
