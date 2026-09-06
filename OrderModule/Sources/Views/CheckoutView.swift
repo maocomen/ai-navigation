@@ -3,7 +3,7 @@ import AppBase
 
 /// 结算视图（下单 + 支付）
 public struct CheckoutView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel = CheckoutViewModel()
     @State private var showPaySuccess = false
 

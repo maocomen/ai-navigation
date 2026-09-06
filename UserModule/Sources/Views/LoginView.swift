@@ -3,7 +3,7 @@ import AppBase
 
 /// 登录视图
 public struct LoginView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel = LoginViewModel()
     @State private var showWelcome = false
 

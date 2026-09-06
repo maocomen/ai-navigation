@@ -5,7 +5,7 @@ import ProductContracts
 
 /// 订单详情视图（支付/取消/状态推进）
 public struct OrderDetailView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel: OrderDetailViewModel
     @State private var showMessage = false
     @State private var showCancelConfirm = false

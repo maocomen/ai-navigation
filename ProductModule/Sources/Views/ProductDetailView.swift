@@ -4,7 +4,7 @@ import OrderContracts
 
 /// 商品详情视图（收藏 + 数量选择 + 加购）
 public struct ProductDetailView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel: ProductDetailViewModel
     @State private var showAddedAlert = false
 

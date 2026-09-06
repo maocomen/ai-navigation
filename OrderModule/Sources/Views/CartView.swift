@@ -5,7 +5,7 @@ import ProductContracts
 
 /// 购物车视图
 public struct CartView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel = CartViewModel()
 
     public init() {}

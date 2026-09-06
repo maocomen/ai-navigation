@@ -3,7 +3,7 @@ import AppBase
 
 /// 注册视图
 public struct RegisterView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel = RegisterViewModel()
     @State private var showSuccess = false
 

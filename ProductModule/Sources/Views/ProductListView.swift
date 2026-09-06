@@ -3,7 +3,7 @@ import AppBase
 
 /// 商品列表视图（搜索 + 分类筛选 + 收藏）
 public struct ProductListView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel: ProductListViewModel
 
     public init(category: String) {

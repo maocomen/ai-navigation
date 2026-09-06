@@ -1,89 +1,70 @@
 import SwiftUI
 
-/// 路由器 - 运行时导航引擎
-///
-/// 负责：
-/// - 实现跨模块导航（push/pop/replace/navigate）
-/// - 多 Tab 独立导航栈管理
-/// - 字符串路由 → 类型化 Route 的桥梁
-///
-/// 业务模块通过 `@Environment(Router.self)` 获取实例，
-/// 无需依赖任何业务模块类型。
+public protocol RouterProtocol: AnyObject {
+    func push(_ route: any RouteType)
+    func pop()
+    func pop(to targetCount: Int)
+    func popToRoot()
+    func replace(_ route: any RouteType)
+    func replaceRoot(_ route: any RouteType)
+    func navigate(to pathString: String)
+    @discardableResult func navigate(urlString: String) -> Bool
+    @discardableResult func navigate(url: URL) -> Bool
+    var count: Int { get }
+    var historyEntries: [RouteState] { get }
+    func clearHistory()
+}
+
 @Observable
 @MainActor
-public final class Router {
+public final class Router<Tab: Hashable>: RouterProtocol {
 
-    public enum Tab: String, CaseIterable, Hashable, Sendable {
-        case home, product, order, profile
-    }
+    public let allTabs: [Tab]
+    public var activeTab: Tab
+    public var tabLabels: [Tab: (name: String, icon: String)] = [:]
 
-    /// 当前活跃的 Tab，由 ContentView 在切换时同步
-    public var activeTab: Tab = .home
-
-    /// 各 Tab 独立导航栈
-    public private(set) var homePath = NavigationPath()
-    public private(set) var productPath = NavigationPath()
-    public private(set) var orderPath = NavigationPath()
-    public private(set) var profilePath = NavigationPath()
-
-    private var history: [RouteState] = []
+    private var paths: [Tab: NavigationPath] = [:]
     private var pathMirrors: [Tab: [String]] = [:]
+    private var history: [RouteState] = []
     private let registry = ModuleRegistry.shared
 
-    public nonisolated init() {}
+    public init(tabs: [Tab], activeTab: Tab) {
+        self.allTabs = tabs
+        self.activeTab = activeTab
+        for tab in tabs { paths[tab] = NavigationPath() }
+    }
 
     // MARK: - 栈绑定
 
-    /// 获取指定 Tab 的路径绑定，供各 Tab 的 NavigationStack 使用
     public func binding(for tab: Tab) -> Binding<NavigationPath> {
         Binding(
-            get: { self.path(for: tab) },
+            get: { self.paths[tab] ?? NavigationPath() },
             set: { self.setPath($0, for: tab) }
         )
     }
 
-    /// 指定 Tab 是否处于二级页（栈非空），用于驱动 TabBar 显隐
     public func isDetail(_ tab: Tab) -> Bool {
-        !path(for: tab).isEmpty
+        !(paths[tab]?.isEmpty ?? true)
     }
 
-    private func path(for tab: Tab) -> NavigationPath {
-        switch tab {
-        case .home: return homePath
-        case .product: return productPath
-        case .order: return orderPath
-        case .profile: return profilePath
-        }
-    }
-
-    /// 系统手势返回（binding 回写）只会减少栈元素，按 count 差值同步镜像；
-    /// Router 主动 push/replace/replaceRoot 在各自方法内维护镜像内容
     private func setPath(_ newPath: NavigationPath, for tab: Tab) {
-        switch tab {
-        case .home: homePath = newPath
-        case .product: productPath = newPath
-        case .order: orderPath = newPath
-        case .profile: profilePath = newPath
-        }
+        paths[tab] = newPath
         let diff = (pathMirrors[tab] ?? []).count - newPath.count
-        if diff > 0 {
-            pathMirrors[tab]?.removeLast(diff)
-        }
+        if diff > 0 { pathMirrors[tab]?.removeLast(diff) }
     }
 
-    // MARK: - 当前活跃栈信息
+    // MARK: - 栈信息
 
-    public var count: Int { path(for: activeTab).count }
+    public var count: Int { paths[activeTab]?.count ?? 0 }
 
-    /// 指定 Tab 的栈路径镜像（自底向上的路由路径序列）
     public func stackPaths(for tab: Tab) -> [String] {
         pathMirrors[tab] ?? []
     }
 
     public var stackDescription: String {
-        let paths = stackPaths(for: activeTab)
-        guard !paths.isEmpty else { return "(空)" }
-        return paths.joined(separator: " → ")
+        let p = stackPaths(for: activeTab)
+        guard !p.isEmpty else { return "(空)" }
+        return p.joined(separator: " → ")
     }
 
     public var historyEntries: [RouteState] { history }
@@ -91,7 +72,7 @@ public final class Router {
     // MARK: - 导航操作
 
     public func push(_ route: any RouteType) {
-        var p = path(for: activeTab)
+        var p = paths[activeTab] ?? NavigationPath()
         p.append(RouteBox(route))
         setPath(p, for: activeTab)
         pathMirrors[activeTab, default: []].append(route._path)
@@ -99,96 +80,81 @@ public final class Router {
     }
 
     public func pop() {
-        var p = path(for: activeTab)
+        var p = paths[activeTab] ?? NavigationPath()
         guard !p.isEmpty else { return }
         p.removeLast()
         setPath(p, for: activeTab)
     }
 
     public func pop(to targetCount: Int) {
-        var p = path(for: activeTab)
+        var p = paths[activeTab] ?? NavigationPath()
         guard targetCount >= 0 && targetCount < p.count else { return }
         p.removeLast(p.count - targetCount)
         setPath(p, for: activeTab)
     }
 
     public func popToRoot() {
-        var p = path(for: activeTab)
+        var p = paths[activeTab] ?? NavigationPath()
         p.removeLast(p.count)
         setPath(p, for: activeTab)
     }
 
     public func replace(_ route: any RouteType) {
-        var p = path(for: activeTab)
-        guard !p.isEmpty else {
-            push(route)
-            return
-        }
+        var p = paths[activeTab] ?? NavigationPath()
+        guard !p.isEmpty else { push(route); return }
         p.removeLast()
         p.append(RouteBox(route))
         setPath(p, for: activeTab)
-        if !(pathMirrors[activeTab] ?? []).isEmpty {
-            pathMirrors[activeTab]?.removeLast()
-        }
+        if !(pathMirrors[activeTab] ?? []).isEmpty { pathMirrors[activeTab]?.removeLast() }
         pathMirrors[activeTab, default: []].append(route._path)
         recordHistory(route._path, action: .replace)
     }
+
+    public func replaceRoot(_ route: any RouteType) {
+        var p = NavigationPath()
+        p.append(RouteBox(route))
+        setPath(p, for: activeTab)
+        pathMirrors[activeTab] = [route._path]
+        recordHistory(route._path, action: .reset)
+    }
+
+    public func popToIndex(_ index: Int) { pop(to: index) }
+
+    // MARK: - URL 导航
 
     public func navigate(to pathString: String) {
         navigate(to: pathString, parameters: [:])
     }
 
-    /// 通过路径字符串 + 参数跳转（App 内调用，caller 视为 `.app`）
-    ///
-    /// `RouteParameters` 值为 `Any`，此处收窄为 `[String: String]` 以对齐 `navigateCore`，
-    /// 非 String 值会被过滤（现有调用方均传 String 值或空参数）。
     public func navigate(to pathString: String, parameters: RouteParameters) {
-        let stringParameters = parameters.compactMapValues { $0 as? String }
-        navigateCore(to: pathString, parameters: stringParameters, caller: .app)
+        let stringParams = parameters.compactMapValues { $0 as? String }
+        navigateCore(to: pathString, parameters: stringParams, caller: .app)
     }
 
-    /// 按路由类型跳转，path 自动取自 `T.path`，避免裸字符串
     public func navigate<T: RouteType>(_ type: T.Type, parameters: RouteParameters = [:]) {
         navigate(to: T.path, parameters: parameters)
     }
 
-    /// 通过 URL 跳转（深度链接入口）
-    /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
-    /// - 解析失败时打印错误原因到控制台
     @discardableResult
     public func navigate(url: URL) -> Bool {
         navigate(parsed: RouteURL.parse(url.absoluteString))
     }
 
-    /// 通过 URL 字符串跳转
-    /// - 返回 `true` 表示成功跳转，`false` 表示 URL 无效或路由未找到
-    /// - 解析失败时打印错误原因到控制台
     @discardableResult
     public func navigate(urlString: String) -> Bool {
         navigate(parsed: RouteURL.parse(urlString))
     }
 
-    /// 深度链接统一入口：解析成功携带 caller 走核心跳转，失败打印错误原因并返回 false
     private func navigate(parsed: Result<RouteURL, RouteURLParseError>) -> Bool {
         switch parsed {
-        case .success(let routeURL):
-            return navigateCore(
-                to: routeURL.path,
-                parameters: routeURL.parameters,
-                caller: routeURL.caller
-            )
+        case .success(let url):
+            return navigateCore(to: url.path, parameters: url.parameters, caller: url.caller)
         case .failure(let error):
             print("[Router] URL parse failed: \(error)")
             return false
         }
     }
 
-    /// 核心跳转：路径 + 参数 + 调用来源（参数以 String 为值，交由工厂二次解析类型）
-    ///
-    /// caller 策略钩子（第一阶段仅打印日志，不改变实际导航行为）：
-    /// - `.external` / `.web`：外部来源，记录来源日志（后续可加安全校验/降级策略）
-    /// - `.push`：推送来源，记录日志（后续可加去重/落地页策略）
-    /// - `.app` / `.widget` / `.siri`：App 受信来源，直接跳转
     @discardableResult
     private func navigateCore(to path: String, parameters: [String: String], caller: RouteURL.Caller) -> Bool {
         switch caller {
@@ -199,47 +165,63 @@ public final class Router {
         case .app, .widget, .siri:
             break
         }
-        guard let route = registry.resolveRoute(for: path, parameters: parameters) else {
-            return false
-        }
+        guard let route = registry.resolveRoute(for: path, parameters: parameters) else { return false }
         push(route)
         return true
     }
 
-    // MARK: - 栈操作（作用于当前活跃 Tab）
-
-    public func replaceRoot(_ route: any RouteType) {
-        var p = NavigationPath()
-        p.append(RouteBox(route))
-        setPath(p, for: activeTab)
-        pathMirrors[activeTab] = [route._path]
-        recordHistory(route._path, action: .reset)
-    }
-
-    public func popToIndex(_ index: Int) {
-        pop(to: index)
-    }
-
     // MARK: - 调试
 
-    public func clearHistory() {
-        history.removeAll()
-    }
+    public func clearHistory() { history.removeAll() }
 
     private func recordHistory(_ path: String, action: RouteAction) {
         history.append(RouteState(path: path, action: action))
     }
 }
 
-// MARK: - Environment 支持
+// MARK: - AnyRouter（类型擦除，供业务模块使用）
 
-private struct RouterKey: EnvironmentKey {
-    static let defaultValue: Router = Router()
-}
+@Observable
+@MainActor
+public final class AnyRouter {
+    private let _push: (any RouteType) -> Void
+    private let _pop: () -> Void
+    private let _popTo: (Int) -> Void
+    private let _popToRoot: () -> Void
+    private let _replace: (any RouteType) -> Void
+    private let _replaceRoot: (any RouteType) -> Void
+    private let _navigateString: (String) -> Void
+    private let _navigateURL: (URL) -> Bool
+    private let _navigateURLString: (String) -> Bool
+    private let _count: () -> Int
+    private let _historyEntries: () -> [RouteState]
+    private let _clearHistory: () -> Void
 
-public extension EnvironmentValues {
-    var router: Router {
-        get { self[RouterKey.self] }
-        set { self[RouterKey.self] = newValue }
+    public init<R: RouterProtocol>(_ router: R) {
+        self._push = { router.push($0) }
+        self._pop = { router.pop() }
+        self._popTo = { router.pop(to: $0) }
+        self._popToRoot = { router.popToRoot() }
+        self._replace = { router.replace($0) }
+        self._replaceRoot = { router.replaceRoot($0) }
+        self._navigateString = { router.navigate(to: $0) }
+        self._navigateURL = { router.navigate(url: $0) }
+        self._navigateURLString = { router.navigate(urlString: $0) }
+        self._count = { router.count }
+        self._historyEntries = { router.historyEntries }
+        self._clearHistory = { router.clearHistory() }
     }
+
+    public func push(_ route: any RouteType) { _push(route) }
+    public func pop() { _pop() }
+    public func pop(to targetCount: Int) { _popTo(targetCount) }
+    public func popToRoot() { _popToRoot() }
+    public func replace(_ route: any RouteType) { _replace(route) }
+    public func replaceRoot(_ route: any RouteType) { _replaceRoot(route) }
+    public func navigate(to pathString: String) { _navigateString(pathString) }
+    @discardableResult public func navigate(url: URL) -> Bool { _navigateURL(url) }
+    @discardableResult public func navigate(urlString: String) -> Bool { _navigateURLString(urlString) }
+    public var count: Int { _count() }
+    public var historyEntries: [RouteState] { _historyEntries() }
+    public func clearHistory() { _clearHistory() }
 }

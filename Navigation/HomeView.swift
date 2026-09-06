@@ -5,7 +5,7 @@ import ProductModule
 import OrderModule
 
 struct HomeView: View {
-    @Environment(Router.self) private var router
+    @Environment(Router<AppTab>.self) private var router
     @State private var deepLinkPath = ""
     @State private var showDeepLinkAlert = false
     @State private var deepLinkResult = ""

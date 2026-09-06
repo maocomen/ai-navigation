@@ -5,7 +5,7 @@ import ProductContracts
 
 /// 用户主页视图
 public struct UserProfileView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel: ProfileViewModel
     @State private var showSaved = false
 

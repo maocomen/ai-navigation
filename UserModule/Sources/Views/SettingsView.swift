@@ -3,7 +3,7 @@ import AppBase
 
 /// 账号设置视图
 public struct SettingsView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     private let repository = UserRepository.shared
     @State private var nickname = ""
     @State private var bio = ""

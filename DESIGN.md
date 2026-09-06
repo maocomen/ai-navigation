@@ -1,6 +1,6 @@
 # Navigation 模块化路由框架 · 方案设计文档
 
-> 版本：1.7
+> 版本：1.8
 > 更新日期：2026-09-06
 > 技术栈：Swift 5.9+ / SwiftUI / iOS 17+ / Swift Package Manager
 
@@ -18,6 +18,8 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 
 项目采用「一个主应用 + 一个基础库 + N 个业务模块」的分层结构，业务模块独立编译为 Swift Package，仅依赖基础库 `AppBase`，彼此之间**无直接源码依赖**，通过 `AppBase` 提供的路由抽象实现解耦。
 
+AppBase 的 `Router` 为泛型类 `Router<Tab: Hashable>`，不耦合任何业务 Tab 定义；主应用定义自己的 `AppTab` 枚举并实例化 `Router<AppTab>`；业务模块通过 `AnyRouter`（类型擦除包装）使用导航 API，无需感知 Tab 类型。
+
 ---
 
 ## 2. 架构总览
@@ -27,30 +29,32 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 ```
 ┌───────────────────────────────────────────────────────────────┐
 │                    Navigation (Host App)                       │
-│   NavigationApp / ContentView / HomeView / Router+Convenience  │
-│              （聚合所有模块，提供便捷导航方法）                    │
+│   NavigationApp / ContentView / HomeView / RouterDebugHUD     │
+│   AppTab 枚举 + Router<AppTab> + AnyRouter 注入               │
 └──────┬──────────────┬──────────────┬──────────────┬────────────┘
        │              │              │              │
 ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼─────┐
 │UserContracts│ │ProductContracts│ │OrderContracts│ │   AppBase   │
-│ UserLinks   │ │ ProductLinks   │ │ OrderLinks   │ │ Router（具体类）│
-│             │ │               │ │ CartService  │ │ ModuleRegistry│
-└──────▲─────┘ └──────▲─────┘ └──────▲─────┘ │ ServiceContainer│
-       │              │              │         └─────────────┘
-┌──────┴─────┐ ┌──────┴─────┐ ┌──────┴─────┐
+│ UserLinks   │ │ ProductLinks   │ │ OrderLinks   │ │ Router<Tab> │
+│             │ │               │ │ CartService  │ │ AnyRouter   │
+└──────▲─────┘ └──────▲─────┘ └──────▲─────┘ │ RouterProtocol│
+       │              │              │         │ ModuleRegistry│
+┌──────┴─────┐ ┌──────┴─────┐ ┌──────┴─────┘ ServiceContainer│
 │ UserModule │ │ProductModule│ │OrderModule │  ← 业务模块 (SPM)
-│ (实现/视图) │ │ (实现/视图)  │ │ (实现/视图) │
+│ @Env(AnyR.)│ │ @Env(AnyR.) │ │ @Env(AnyR.)│
 └────────────┘ └────────────┘ └────────────┘
 ```
 
 **依赖规则（单向）**：
-- 业务模块 → AppBase（`Router` 具体类 + 基础设施）
+- 业务模块 → AppBase（`AnyRouter` 类型擦除包装 + 基础设施）
 - 业务模块 → 各自契约包（UserContracts / ProductContracts / OrderContracts）
 - 消费方 → 对方契约包（如 ProductModule → OrderContracts），但**不依赖对方实现模块**
 - 契约包之间无依赖，AppBase 无业务依赖
 
 **AppBase 核心职责**：
-- `Router`：运行时导航引擎（push/pop/navigate + 多 Tab 栈管理 + 字符串路由桥接）
+- `Router<Tab: Hashable>`：泛型运行时导航引擎（push/pop/navigate + 多 Tab 栈管理 + 字符串路由桥接），不耦合业务 Tab 定义
+- `AnyRouter`：类型擦除包装器，业务模块通过它使用导航 API，无需知道 Tab 类型
+- `RouterProtocol`：导航 API 协议契约，`AnyRouter` 的内部实现依据
 - `ModuleRegistry`：路由注册中心
 - `ServiceContainer`：依赖注入容器
 
@@ -65,17 +69,17 @@ Navigation 是一个 **iOS SwiftUI 模块化路由框架演示项目**，核心�
 Navigation/
 ├── Navigation.xcodeproj/          # Xcode 工程
 ├── Navigation/                    # 主应用
-│   ├── NavigationApp.swift        # @main 入口，初始化各模块
-│   ├── ContentView.swift          # TabView + 独立导航栈 + 路由分发
-│   ├── Router+Convenience.swift   # Router 便捷方法扩展（import 业务模块）
+│   ├── NavigationApp.swift        # @main 入口，Router<AppTab> + AnyRouter 初始化
+│   ├── ContentView.swift          # AppTab 枚举 + TabView + 独立导航栈 + 路由分发
 │   ├── HomeView.swift             # 路由框架演示首页
+│   ├── RouterDebugHUD.swift       # 悬浮调试面板（各 Tab 栈深度/路径/操作按钮）
 │   ├── DetailView.swift           # （占位）
 │   └── SettingView.swift          # （占位）
 ├── AppBase/                       # 基础库 (SPM)
 │   ├── Package.swift
 │   └── Sources/
 │       ├── AppBase.swift          # 基础类 + AppConfig
-│       ├── Router.swift           # 路由器（具体类，多 Tab 栈 + Environment 注入）
+│       ├── Router.swift           # Router<Tab>（泛型） + RouterProtocol + AnyRouter
 │       ├── RouteType.swift        # RouteType 协议 + RouteBox + 路由工厂类型
 │       ├── RouteURL.swift         # 路由 URL 解析器
 │       ├── ModuleRegistry.swift   # 模块注册中心（路由 + 资源初始化）
@@ -119,6 +123,7 @@ Navigation/
 │       └── OrderModule.swift      # 路由定义 + 模块注册
 ├── NavigationTests/               # 主应用单元测试
 ├── NavigationUITests/             # UI 测试
+├── README.md                      # 开发环境说明
 ├── README_APPBASE.md              # AppBase 依赖接入说明（历史文档）
 ├── ROUTING_FRAMEWORK_GUIDE.md     # 路由框架指南（历史文档，部分内容已过期）
 └── DESIGN.md                      # 本文档
@@ -134,7 +139,10 @@ Navigation/
 |------|------|------|
 | `RouteType` | AppBase/RouteType.swift | 所有路由统一遵守的协议，声明 `path` 与 `makeView()` |
 | `RouteBox` | AppBase/RouteType.swift | `NavigationPath` 的统一元素包装，保证 `navigationDestination` 稳定匹配 |
-| `Router` | AppBase/Router.swift | 运行时导航引擎（具体类），持有各 Tab 独立路由栈，通过 `@Environment(Router.self)` 注入 |
+| `Router<Tab>` | AppBase/Router.swift | 泛型运行时导航引擎，`paths: [Tab: NavigationPath]` 字典管理多 Tab 独立栈，通过 `@Environment(Router<Tab>.self)` 注入 |
+| `RouterProtocol` | AppBase/Router.swift | 导航 API 协议契约，定义 push/pop/navigate 签名 |
+| `AnyRouter` | AppBase/Router.swift | 类型擦除包装器，业务模块通过 `@Environment(AnyRouter.self)` 使用导航，无需感知 Tab 类型 |
+| `AppTab` | Navigation/ContentView.swift | 主应用 Tab 枚举（`home/product/order/profile`），定义 `Router<AppTab>` 的类型参数 |
 | `ModuleRegistry` | AppBase/ModuleRegistry.swift | 模块与路由的注册中心，支持实例路由与工厂路由，注册时初始化模块资源 |
 | `ModuleProtocol` | AppBase/ModuleProtocol.swift | 模块协议，声明 `registerRoutes` 与 `initializeResources` |
 | `RouteURL` | AppBase/RouteURL.swift | 路由 URL 解析器（scheme + caller host + path + query） |
@@ -143,8 +151,9 @@ Navigation/
 | `OrderLinks` | OrderContracts/OrderContracts.swift | 订单域链接常量（单一真相源） |
 | `ProductLinks` | ProductContracts/ProductContracts.swift | 商品域链接常量（单一真相源） |
 | `UserLinks` | UserContracts/UserContracts.swift | 用户域链接常量（单一真相源） |
-| `Router` | AppBase/Router.swift | 运行时导航引擎（具体类），持有各 Tab 独立路由栈 |
 | `RouteState` | AppBase/RouteState.swift | 路由历史条目与动作（push/pop/replace/reset） |
+| `RouteAction` | AppBase/RouteState.swift | 路由动作枚举（push/pop/replace/replaceRoot/reset） |
+| `RouterDebugHUD` | Navigation/RouterDebugHUD.swift | 悬浮调试面板，显示各 Tab 栈深度、栈路径、操作按钮 |
 | `*Repository` | 各模块 Repositories/ | 内存态数据仓库（user/product/order），承载业务数据 CRUD |
 | `*ViewModel` | 各模块 ViewModels/ | `@Observable` 逻辑层，封装校验、状态与业务编排 |
 
@@ -157,21 +166,54 @@ public protocol RouteType: Hashable, Sendable {
     @MainActor func makeView() -> AnyView
 }
 
-// Router - 运行时导航引擎（AppBase 具体类）
+// Router - 泛型运行时导航引擎（AppBase）
 @Observable @MainActor
-public final class Router {
+public final class Router<Tab: Hashable> {
+    private(set) var paths: [Tab: NavigationPath]
+    var activeTab: Tab
+    var tabLabels: [Tab: (title: String, icon: String)]
+    var pathMirrors: [Tab: [String]]
+
+    public init(tabs: [Tab], activeTab: Tab)
+    public func binding(for tab: Tab) -> Binding<NavigationPath>
     public func push(_ route: any RouteType)
     public func pop()
+    public func pop(to targetCount: Int)
     public func popToRoot()
     public func replace(_ route: any RouteType)
-    public func navigate(to path: String, parameters: RouteParameters = [:])
+    public func replaceRoot(_ route: any RouteType)
+    public func navigate(to pathString: String)
+    public func navigate(to pathString: String, parameters: RouteParameters)
     @discardableResult public func navigate(url: URL) -> Bool
     @discardableResult public func navigate(urlString: String) -> Bool
     public var count: Int { get }
-    // + 多 Tab 栈管理、binding、isDetail 等
+    public var historyEntries: [RouteState] { get }
 }
 
-// 业务模块通过 @Environment(Router.self) 使用，无需协议抽象
+// RouterProtocol - 导航 API 协议契约
+public protocol RouterProtocol: AnyObject {
+    func push(_ route: any RouteType)
+    func pop()
+    func pop(to targetCount: Int)
+    func popToRoot()
+    func replace(_ route: any RouteType)
+    func replaceRoot(_ route: any RouteType)
+    func navigate(to pathString: String)
+    @discardableResult func navigate(urlString: String) -> Bool
+    @discardableResult func navigate(url: URL) -> Bool
+    var count: Int { get }
+    var historyEntries: [RouteState] { get }
+    func clearHistory()
+}
+
+// AnyRouter - 类型擦除包装器（业务模块使用）
+@Observable @MainActor
+public final class AnyRouter {
+    public init<R: RouterProtocol>(_ router: R)
+    // 同 RouterProtocol 的全部方法签名
+}
+
+// 业务模块通过 @Environment(AnyRouter.self) 使用，无需知道 Tab 类型
 ```
 
 ### 3.3 三种跳转方式
@@ -363,50 +405,72 @@ View ──用户交互──▶ ViewModel ──CRUD──▶ Repository（内�
 - **Model**：纯数据模型（`struct`），`Identifiable` / `Sendable`
 - **Repository**：内存态数据仓库，单例，`@unchecked Sendable` + `NSLock` 保证线程安全
 - **ViewModel**：`@Observable @MainActor`，持有 Repository 引用，封装校验与业务编排
-- **View**：仅绑定 ViewModel 状态，通过 `@Environment(Router.self)` 触发导航
+- **View**：仅绑定 ViewModel 状态，通过 `@Environment(AnyRouter.self)` 触发导航
 
 ---
 
 ## 5. 栈管理（各 Tab 独立栈）
 
-主应用的 `Router` 维护**每个 Tab 独立的 `NavigationPath`**，通过当前活跃 Tab（`activeTab`）确定 `push/navigate/pop` 等操作作用于哪个栈，Tab 之间互不影响：
+主应用的 `Router<AppTab>` 维护**每个 Tab 独立的 `NavigationPath`**，通过 `paths` 字典按 Tab 存储，当前活跃 Tab（`activeTab`）确定 `push/navigate/pop` 等操作作用于哪个栈，Tab 之间互不影响：
 
 ```swift
 @Observable @MainActor
-public final class Router {
-    enum Tab: String, CaseIterable, Hashable, Sendable {
-        case home, product, order, profile
-    }
-    var activeTab: Tab = .home
-    private(set) var homePath = NavigationPath()
-    private(set) var productPath = NavigationPath()
-    private(set) var orderPath = NavigationPath()
-    private(set) var profilePath = NavigationPath()
+public final class Router<Tab: Hashable> {
+    private(set) var paths: [Tab: NavigationPath]
+    var activeTab: Tab
+    var tabLabels: [Tab: (title: String, icon: String)]
+    var pathMirrors: [Tab: [String]]  // 系统手势 pop 同步用
 
-    func binding(for tab: Tab) -> Binding<NavigationPath> { ... }
+    init(tabs: [Tab], activeTab: Tab) {
+        self.paths = Dictionary(uniqueKeysWithValues: tabs.map { ($0, NavigationPath()) })
+        self.activeTab = activeTab
+        self.tabLabels = [:]
+        self.pathMirrors = [:]
+    }
+
+    func binding(for tab: Tab) -> Binding<NavigationPath> {
+        Binding(get: { self.paths[tab, default: NavigationPath()] },
+                set: { self.paths[tab] = $0 })
+    }
     var count: Int { path(for: activeTab).count }
     // push/pop/navigate 均作用于 path(for: activeTab)
 }
 ```
 
-`ContentView` 通过 `TabView(selection:)` 同步 `activeTab`，各 Tab 的 `NavigationStack` 绑定各自的栈：
+`ContentView` 定义主应用的 `AppTab` 枚举，通过 `TabView(selection:)` 同步 `activeTab`，各 Tab 的 `NavigationStack` 绑定各自的栈：
 
 ```swift
-TabView(selection: $selectedTab) {
-    tabStack(for: .home) { HomeView() }.tag(Router.Tab.home)
-    tabStack(for: .product) { ProductListView(category: "全部") }.tag(Router.Tab.product)
+enum AppTab: Hashable, CaseIterable {
+    case home, product, order, profile
+}
+
+TabView(selection: $router.activeTab) {
+    tabStack(for: .home) { HomeView() }.tag(AppTab.home)
+    tabStack(for: .product) { ProductListView(category: "全部") }.tag(AppTab.product)
     ...
 }
-.onChange(of: selectedTab) { _, newTab in router.activeTab = newTab }
 
-private func tabStack(for tab: Router.Tab, @ViewBuilder root: () -> some View) -> some View {
+private func tabStack(for tab: AppTab, @ViewBuilder root: () -> some View) -> some View {
     NavigationStack(path: router.binding(for: tab)) {
         root().navigationDestination(for: AnyHashable.self) { routeDestination(for: $0) }
     }
 }
 ```
 
-> 语义：`router.navigate(to:)` 与 `push` 均作用于**当前活跃 Tab** 的栈。位于「首页」内的全局深度链接跳转即作用于首页栈；各 Tab 内部的 `push` 只影响本 Tab 自身的栈，因此「我的」Tab 的导航栈信息面板能始终反映并操作自身栈。
+**业务模块的栈操作**：业务模块通过 `AnyRouter`（类型擦除包装器）调用 push/pop/navigate，无需知道 Tab 类型：
+
+```swift
+// 业务模块 View
+@Environment(AnyRouter.self) private var navigator
+
+navigator.push(UserRoutes.Profile(userID: "u42"))
+navigator.popToRoot()
+navigator.navigate(to: OrderLinks.cart)
+```
+
+**栈路径镜像（`pathMirrors`）**：`Router` 在每次 push/pop/replace 时显式同步 `pathMirrors`（`[Tab: [String]]`），用于调试面板展示各 Tab 栈内路由路径。系统手势触发的 pop 通过 `setPath` 的 count-diff 同步更新镜像。
+
+> 语义：`router.navigate(to:)` 与 `push` 均作用于**当前活跃 Tab** 的栈。位于「首页」内的全局深度链接跳转即作用于首页栈；各 Tab 内部的 `push` 只影响本 Tab 自身的栈。`RouterDebugHUD` 显示各 Tab 的栈深度与路径。
 
 ---
 
@@ -504,6 +568,10 @@ public final class PaymentModule: ModuleProtocol {
 | 10 | 业务模块单文件混写路由/数据/视图，逻辑与 UI 未分层 | 三模块拆为 MVVM（Model/Repository/ViewModel/View/Routes） | ✅ |
 | 11 | 子页面业务空泛（假数据、无交互状态） | 三模块补充内存 Repository 与完整业务流程（登录注册/搜索收藏/下单支付） | ✅ |
 | 12 | `ModuleRegistry.registerModule` 未调用 `initializeResources`，模块资源不初始化 | `registerModule` 内增加 `module.initializeResources()` | ✅ |
+| 13 | `Router` 硬编码 Tab 枚举和路径属性，新增/删除 Tab 需改 AppBase | `Router<Tab: Hashable>` 泛型化，`paths` 字典替代硬编码属性；`AnyRouter` 类型擦除供业务模块使用；`RouterProtocol` 定义 API 契约；主应用定义 `AppTab` 枚举 | ✅ |
+| 14 | 业务模块通过 `@Environment(Router.self)` 直接依赖 AppBase 具体类 | 业务模块改用 `@Environment(AnyRouter.self)`，通过类型擦除包装器解耦 | ✅ |
+| 15 | 无调试面板，各 Tab 栈状态不可见 | 新增 `RouterDebugHUD` 悬浮面板，显示各 Tab 栈深度、栈路径、操作按钮 | ✅ |
+| 16 | 系统手势 pop 后栈路径镜像不同步 | `push/pop/replace/replaceRoot` 显式同步 `pathMirrors`；`setPath` count-diff 同步系统手势 pop | ✅ |
 
 ---
 
@@ -558,12 +626,30 @@ public final class PaymentModule: ModuleProtocol {
 ## 9. 验证结果
 
 - `AppBase` / `UserModule` / `ProductModule` / `OrderModule`：`swift build` 全部成功
-- `AppBase` 单元测试：3 个测试全部通过
+- `AppBase` 单元测试：19 个测试全部通过（RouteURL 16 + RouteState 1 + AppBase 2）
 - 主应用 `Navigation`：`xcodebuild build` 成功（`** BUILD SUCCEEDED **`）
 
 ---
 
 ## 10. 版本记录
+
+### v1.8（2026-09-06）
+
+**主题：Router 泛型化（Tab 解耦）+ 调试面板**
+
+- `Router` 改为泛型 `Router<Tab: Hashable>`，`paths` 字典 `[Tab: NavigationPath]` 替代硬编码路径属性（`homePath`/`productPath` 等）
+- AppBase 不再耦合任何业务 Tab 定义，新增/删除 Tab 只改主应用 `AppTab` 枚举
+- 新增 `RouterProtocol`：导航 API 协议契约，定义 push/pop/navigate 签名
+- 新增 `AnyRouter`：类型擦除包装器，业务模块通过 `@Environment(AnyRouter.self)` 使用导航，无需感知 Tab 类型
+- 主应用 `ContentView` 定义 `AppTab` 枚举（`home/product/order/profile`），通过 `AppTabRouterKey` 注册 EnvironmentKey
+- `NavigationApp` 同时注入 `Router<AppTab>` 和 `AnyRouter(router)`
+- 10 个业务模块 View：`@Environment(Router.self)` → `@Environment(AnyRouter.self)`
+- 新增 `RouterDebugHUD`（悬浮调试面板）：可折叠浮窗，显示各 Tab 栈深度、栈路径、Pop/PopToRoot/Clear 操作按钮、最近 20 条历史记录
+- `ContentView` 挂载 HUD overlay（ZStack 层级），移除 ProfileTabView 内嵌的「导航栈信息」区块
+- `HomeView` 简化为纯导航演示（移除历史列表区块，HUD 已覆盖）
+- `README.md` 新增开发环境说明（macOS 26.6.2 / Xcode 27.0 / Swift 5.9+ / iOS 17+）
+- `project.pbxproj` 修复 objectVersion 77 兼容性（Xcode 自动升级 110 后手动回退）
+- 文档：更新架构图、目录结构、核心类型表、栈管理章节、模块接入规范、验证结果
 
 ### v1.7（2026-09-06）
 

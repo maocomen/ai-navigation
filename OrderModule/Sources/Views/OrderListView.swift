@@ -3,7 +3,7 @@ import AppBase
 
 /// 订单列表视图
 public struct OrderListView: View {
-    @Environment(Router.self) private var router
+    @Environment(AnyRouter.self) private var router
     @State private var viewModel = OrderListViewModel()
 
     public init() {}

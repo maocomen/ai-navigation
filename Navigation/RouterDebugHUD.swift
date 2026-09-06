@@ -1,19 +1,13 @@
 import SwiftUI
 import AppBase
 
-/// 全局路由调试 HUD - 悬浮于导航栈之外，任何二级页实时可见
-///
-/// 收起态：底部胶囊，显示活跃 Tab 与栈深度
-/// 展开态：各 Tab 栈深度、当前栈路由路径、Pop 操作、最近导航历史
 struct RouterDebugHUD: View {
-    @Environment(Router.self) private var router
+    @Environment(Router<AppTab>.self) private var router
     @State private var expanded = false
 
     var body: some View {
         VStack(spacing: 8) {
-            if expanded {
-                panel
-            }
+            if expanded { panel }
             capsule
         }
         .padding(.bottom, router.isDetail(router.activeTab) ? 8 : 64)
@@ -21,13 +15,10 @@ struct RouterDebugHUD: View {
     }
 
     private var capsule: some View {
-        Button {
-            expanded.toggle()
-        } label: {
+        Button { expanded.toggle() } label: {
             HStack(spacing: 6) {
-                Image(systemName: "ladybug")
-                    .font(.caption2)
-                Text("\(tabName(router.activeTab)) · 栈 \(router.count)")
+                Image(systemName: "ladybug").font(.caption2)
+                Text("\(tabLabel(router.activeTab).name) · 栈 \(router.count)")
                     .font(.caption.bold().monospacedDigit())
                 Image(systemName: expanded ? "chevron.down" : "chevron.up")
                     .font(.caption2)
@@ -44,74 +35,13 @@ struct RouterDebugHUD: View {
     private var panel: some View {
         VStack(alignment: .leading, spacing: 10) {
             tabDepths
-
             Divider()
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("当前栈 (\(router.stackPaths(for: router.activeTab).count))")
-                    .font(.caption2.bold())
-                    .foregroundStyle(.secondary)
-                let paths = router.stackPaths(for: router.activeTab)
-                if paths.isEmpty {
-                    Text("(空)")
-                        .font(.caption.monospaced())
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(Array(paths.enumerated()), id: \.offset) { index, path in
-                        HStack(spacing: 6) {
-                            Text("\(index)")
-                                .font(.caption2.monospacedDigit())
-                                .foregroundStyle(.secondary)
-                                .frame(width: 14, alignment: .trailing)
-                            Text(path)
-                                .font(.caption.monospaced())
-                                .lineLimit(1)
-                        }
-                    }
-                }
-            }
-
+            currentStack
             Divider()
-
-            HStack(spacing: 8) {
-                hudButton("Pop 返回", icon: "arrow.up") {
-                    router.pop()
-                }
-                .disabled(router.count == 0)
-
-                hudButton("Pop to Root", icon: "arrow.up.to.line", destructive: true) {
-                    router.popToRoot()
-                }
-                .disabled(router.count == 0)
-
-                hudButton("清空历史", icon: "trash") {
-                    router.clearHistory()
-                }
-            }
-
+            actionButtons
             if !router.historyEntries.isEmpty {
                 Divider()
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("最近历史")
-                        .font(.caption2.bold())
-                        .foregroundStyle(.secondary)
-                    ForEach(Array(router.historyEntries.suffix(4).enumerated()), id: \.offset) { _, entry in
-                        HStack(spacing: 6) {
-                            Image(systemName: actionIcon(entry.action))
-                                .font(.caption2)
-                                .foregroundStyle(actionColor(entry.action))
-                                .frame(width: 12)
-                            Text(entry.path)
-                                .font(.caption2.monospaced())
-                                .lineLimit(1)
-                            Spacer()
-                            Text(entry.action.rawValue)
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
+                recentHistory
             }
         }
         .padding(12)
@@ -123,9 +53,9 @@ struct RouterDebugHUD: View {
 
     private var tabDepths: some View {
         HStack(spacing: 6) {
-            ForEach(Router.Tab.allCases, id: \.self) { tab in
+            ForEach(router.allTabs, id: \.self) { tab in
                 VStack(spacing: 2) {
-                    Text(tabName(tab))
+                    Text(tabLabel(tab).name)
                         .font(.caption2.bold())
                         .foregroundStyle(tab == router.activeTab ? .white : .primary)
                     Text("\(router.stackPaths(for: tab).count)")
@@ -142,28 +72,69 @@ struct RouterDebugHUD: View {
         }
     }
 
+    private var currentStack: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("当前栈 (\(router.stackPaths(for: router.activeTab).count))")
+                .font(.caption2.bold())
+                .foregroundStyle(.secondary)
+            let paths = router.stackPaths(for: router.activeTab)
+            if paths.isEmpty {
+                Text("(空)").font(.caption.monospaced()).foregroundStyle(.secondary)
+            } else {
+                ForEach(Array(paths.enumerated()), id: \.offset) { index, path in
+                    HStack(spacing: 6) {
+                        Text("\(index)")
+                            .font(.caption2.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                            .frame(width: 14, alignment: .trailing)
+                        Text(path).font(.caption.monospaced()).lineLimit(1)
+                    }
+                }
+            }
+        }
+    }
+
+    private var actionButtons: some View {
+        HStack(spacing: 8) {
+            hudButton("Pop 返回", icon: "arrow.up") { router.pop() }
+                .disabled(router.count == 0)
+            hudButton("Pop to Root", icon: "arrow.up.to.line", destructive: true) { router.popToRoot() }
+                .disabled(router.count == 0)
+            hudButton("清空历史", icon: "trash") { router.clearHistory() }
+        }
+    }
+
+    private var recentHistory: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("最近历史").font(.caption2.bold()).foregroundStyle(.secondary)
+            ForEach(Array(router.historyEntries.suffix(4).enumerated()), id: \.offset) { _, entry in
+                HStack(spacing: 6) {
+                    Image(systemName: actionIcon(entry.action))
+                        .font(.caption2)
+                        .foregroundStyle(actionColor(entry.action))
+                        .frame(width: 12)
+                    Text(entry.path).font(.caption2.monospaced()).lineLimit(1)
+                    Spacer()
+                    Text(entry.action.rawValue).font(.caption2).foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
+    private func tabLabel(_ tab: AppTab) -> (name: String, icon: String) {
+        router.tabLabels[tab] ?? (name: "\(tab)", icon: "questionmark")
+    }
+
     private func hudButton(_ title: String, icon: String, destructive: Bool = false, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Label(title, systemImage: icon)
                 .font(.caption2.bold())
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 6)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(destructive ? Color.red.opacity(0.12) : Color.secondary.opacity(0.12))
-                )
+                .background(RoundedRectangle(cornerRadius: 8).fill(destructive ? Color.red.opacity(0.12) : Color.secondary.opacity(0.12)))
         }
         .buttonStyle(.plain)
         .tint(destructive ? .red : .primary)
-    }
-
-    private func tabName(_ tab: Router.Tab) -> String {
-        switch tab {
-        case .home: return "首页"
-        case .product: return "商品"
-        case .order: return "订单"
-        case .profile: return "我的"
-        }
     }
 
     private func actionIcon(_ action: RouteAction) -> String {
