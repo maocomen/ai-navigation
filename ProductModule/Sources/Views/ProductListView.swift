@@ -18,6 +18,7 @@ public struct ProductListView: View {
                 grid
             }
         }
+        .id(filterState)
         .navigationTitle("商品")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -29,6 +30,10 @@ public struct ProductListView: View {
                 }
             }
         }
+    }
+
+    private var filterState: String {
+        "\(viewModel.selectedCategory)|\(viewModel.showFavoritesOnly)"
     }
 
     private var searchBar: some View {
